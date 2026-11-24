@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+# data and generated artifacts stay local
+data/*
+!data/.gitkeep
+artifacts/*
+!artifacts/.gitkeep
+*.mp3
+*.wav
+node_modules/

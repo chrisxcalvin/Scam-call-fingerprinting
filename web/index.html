@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ScamShield Voice</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>ScamShield Voice</h1>
+  <nav id="tabs">
+    <button data-tab="console" class="active">Console</button>
+    <button data-tab="pipeline">Pipeline</button>
+    <button data-tab="results">Results</button>
+  </nav>
+  <div class="controls">
+    <button id="btn-live" title="Analyse a live call from the microphone (use headphones or speakerphone)">● Live mic</button>
+    <button id="btn-upload">⬆ Upload</button>
+    <input id="file" type="file" accept=".wav,.mp3,.m4a,.webm,audio/*" hidden>
+    <select id="sample"><option value="">▶ Play sample…</option></select>
+    <label class="speak" title="Stream the sample through the live (WebSocket) path at real-time speed"><input type="checkbox" id="as-live" checked> as live call</label>
+    <span id="status">status: <b id="status-text">loading</b></span>
+  </div>
+</header>
+<div id="mock-banner" hidden>⚠ MOCK DATA — placeholder values for UI development, not real analysis.</div>
+<div id="alert" class="alert" hidden><span id="alert-text"></span><button id="alert-close" title="Dismiss">✕</button></div>
+
+<main id="tab-console" class="tab">
+  <section class="panel wide">
+    <div id="clip-info" class="muted">No clip yet. Upload a call recording, drop a file anywhere, or pick a sample.</div>
+    <audio id="player" controls hidden></audio>
+    <h2>Waveform <small>(green = speech by VAD)</small></h2>
+    <canvas id="cv-wave" width="900" height="110"></canvas>
+    <h2>Spectrogram <small>(0–8 kHz, dB · blue dots = fingerprint peaks · box = matched region)</small></h2>
+    <canvas id="cv-spec" width="900" height="220"></canvas>
+  </section>
+  <section class="panel center">
+    <h2>Risk</h2>
+    <canvas id="cv-gauge" width="300" height="180"></canvas>
+    <div id="level" class="level">–</div>
+    <ul id="reasons"></ul>
+  </section>
+  <section class="panel">
+    <h2>Transcript</h2>
+    <div id="transcript"><span class="muted">No analysis yet.</span></div>
+  </section>
+  <section class="panel wide">
+    <h2>Risk timeline</h2>
+    <canvas id="cv-timeline" width="900" height="150"></canvas>
+  </section>
+  <section class="panel">
+    <h2>Evidence</h2>
+    <div id="evidence"></div>
+  </section>
+  <section class="panel full">
+    <h2>Agent <small id="agent-state"></small></h2>
+    <div id="agent-log"><span class="muted">Analyse a call, then ask: “Why do you think it's a scam?” or “What should I do?”</span></div>
+    <div class="agent-row">
+      <button id="btn-ptt" disabled title="Hold to speak a question">🎤 Hold to ask</button>
+      <input id="ask-text" disabled placeholder="or type a question…" maxlength="500">
+      <button id="btn-ask" disabled>↵</button>
+      <label class="speak"><input type="checkbox" id="speak-on" checked> 🔊 Speak</label>
+    </div>
+  </section>
+</main>
+
+<main id="tab-pipeline" class="tab" hidden>
+  <section class="panel wide"><h2>Fingerprint: offset histogram <small>(spike = many hashes agree on one time offset = match)</small></h2>
+    <canvas id="cv-offset" width="900" height="200"></canvas><div id="offset-info" class="muted"></div></section>
+  <section class="panel"><h2>Stage timings (ms)</h2><div id="timings" class="muted">Analyse a clip first.</div></section>
+  <section class="panel"><h2>Fusion components</h2><div id="components"></div></section>
+  <section class="panel wide"><h2>Signal stages <small>(first 2 s)</small></h2><div id="stages"></div></section>
+  <section class="panel"><h2>Script similarity</h2><div id="sims"></div></section>
+</main>
+
+<main id="tab-results" class="tab" hidden>
+  <section class="panel full"><h2>Results</h2><div id="results" class="muted">Loading…</div></section>
+</main>
+
+<footer>Detects known &amp; similar scams. Demo data is synthetic/staged. Not a substitute for calling your bank.</footer>
+<script src="app.js"></script>
+</body>
+</html>
