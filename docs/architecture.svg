@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="560" viewBox="0 0 1100 560" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5b6478"/></marker>
+    <style>
+      .box{fill:#ffffff;stroke:#c5cbd8;stroke-width:1.5;rx:10}
+      .t{font-size:15px;font-weight:600;fill:#1d2433}
+      .s{font-size:12px;fill:#5b6478}
+      .lane{font-size:12px;font-weight:700;fill:#8a93a6;letter-spacing:.08em}
+      .ln{stroke:#5b6478;stroke-width:1.6;fill:none;marker-end:url(#a)}
+      .own{font-size:11px;font-weight:700}
+    </style>
+  </defs>
+  <rect width="1100" height="560" fill="#f6f7fb"/>
+  <text x="30" y="36" font-size="22" font-weight="700" fill="#1d2433">ScamShield Voice: architecture</text>
+  <text x="30" y="58" class="s">Browser streams or uploads audio; three detection layers are fused into a 0-100 risk; a grounded voice agent warns and answers.</text>
+
+  <!-- lanes -->
+  <text x="30" y="98" class="lane">BROWSER (web/)</text>
+  <text x="250" y="98" class="lane">AUDIO (A)</text>
+  <text x="470" y="98" class="lane">DETECTION LAYERS</text>
+  <text x="780" y="98" class="lane">DECISION + AGENT</text>
+
+  <!-- browser -->
+  <rect x="30" y="112" width="190" height="96" class="box"/>
+  <text x="44" y="138" class="t">Mic / Upload / Sample</text>
+  <text x="44" y="158" class="s">AudioWorklet: PCM16 16 kHz,</text>
+  <text x="44" y="174" class="s">100 ms frames over /ws/live</text>
+  <text x="44" y="190" class="s">or POST /api/analyze</text>
+
+  <rect x="30" y="236" width="190" height="150" class="box"/>
+  <text x="44" y="262" class="t">Dashboard</text>
+  <text x="44" y="282" class="s">waveform + VAD, spectrogram</text>
+  <text x="44" y="298" class="s">with peaks and match box,</text>
+  <text x="44" y="314" class="s">risk gauge + timeline,</text>
+  <text x="44" y="330" class="s">transcript with flags,</text>
+  <text x="44" y="346" class="s">evidence, Pipeline + Results</text>
+  <text x="44" y="370" class="s">alert banner (spoken)</text>
+
+  <rect x="30" y="414" width="190" height="80" class="box"/>
+  <text x="44" y="440" class="t">Agent panel</text>
+  <text x="44" y="460" class="s">hold-to-ask (push-to-talk),</text>
+  <text x="44" y="476" class="s">typed questions, TTS playback</text>
+
+  <!-- audio -->
+  <rect x="250" y="112" width="190" height="150" class="box"/>
+  <text x="264" y="138" class="t">Preprocess + VAD</text>
+  <text x="264" y="158" class="s">decode, resample 16 kHz,</text>
+  <text x="264" y="174" class="s">DC removal, normalise,</text>
+  <text x="264" y="190" class="s">pre-emphasis (α = 0.97),</text>
+  <text x="264" y="206" class="s">framing; VAD: energy + ZCR,</text>
+  <text x="264" y="222" class="s">adaptive threshold, hangover</text>
+  <text x="264" y="246" class="own" fill="#2c7be5">from scratch (NumPy)</text>
+
+  <rect x="250" y="290" width="190" height="130" class="box"/>
+  <text x="264" y="316" class="t">Live session</text>
+  <text x="264" y="336" class="s">rolling 12 s window,</text>
+  <text x="264" y="352" class="s">tick every 2 s,</text>
+  <text x="264" y="368" class="s">STT only on finished speech,</text>
+  <text x="264" y="384" class="s">levels only rise, alerts</text>
+  <text x="264" y="400" class="s">debounced 5 s</text>
+
+  <!-- layers -->
+  <rect x="470" y="112" width="280" height="104" class="box" stroke="#2c7be5"/>
+  <text x="484" y="138" class="t">L1 Acoustic fingerprint</text>
+  <text x="484" y="158" class="s">own STFT (Hann 32 ms / 16 ms) -> peaks in</text>
+  <text x="484" y="174" class="s">300-3400 Hz -> hash(f1,f2,dt) -> index -></text>
+  <text x="484" y="190" class="s">offset histogram spike = known recording</text>
+  <text x="484" y="207" class="own" fill="#2c7be5">A · catches replayed / robocall audio</text>
+
+  <rect x="470" y="234" width="280" height="120" class="box" stroke="#16a34a"/>
+  <text x="484" y="260" class="t">L2 Script matching</text>
+  <text x="484" y="280" class="s">Whisper STT -> multilingual MiniLM</text>
+  <text x="484" y="296" class="s">embeddings, cosine vs scam-script chunks</text>
+  <text x="484" y="312" class="s">+ red-flag lexicon (7 categories, EN +</text>
+  <text x="484" y="328" class="s">romanised Hindi) with negation/safe context</text>
+  <text x="484" y="345" class="own" fill="#16a34a">B · catches new voices / live callers</text>
+
+  <rect x="470" y="372" width="280" height="92" class="box" stroke="#b7791f"/>
+  <text x="484" y="398" class="t">L3 Voice cues</text>
+  <text x="484" y="418" class="s">MFCC, YIN pitch, energy, ZCR, pace, pauses</text>
+  <text x="484" y="434" class="s">(computed and shown; weight 0 until calibrated)</text>
+  <text x="484" y="452" class="own" fill="#b7791f">B · supporting evidence only</text>
+
+  <!-- decision -->
+  <rect x="780" y="112" width="290" height="140" class="box" stroke="#dc2626"/>
+  <text x="794" y="138" class="t">Fusion (noisy-OR)</text>
+  <text x="794" y="160" class="s">score = 100 (1 - Π (1 - wᵢ sᵢ))</text>
+  <text x="794" y="178" class="s">w = fp .95, script .80, flags .60, voice .25</text>
+  <text x="794" y="196" class="s">fingerprint hit -> >= 90; safe context caps flags</text>
+  <text x="794" y="214" class="s">safe &lt;30 · suspicious · high &gt;=60 · scam &gt;=85</text>
+  <text x="794" y="238" class="s">thresholds calibrated on dev (run_eval)</text>
+
+  <rect x="780" y="272" width="290" height="132" class="box" stroke="#7c3aed"/>
+  <text x="794" y="298" class="t">Voice agent</text>
+  <text x="794" y="318" class="s">grounded ONLY on the Evidence object</text>
+  <text x="794" y="334" class="s">Gemini / Anthropic, number + stats guard,</text>
+  <text x="794" y="350" class="s">offline fallback; at most 3 sentences;</text>
+  <text x="794" y="366" class="s">cached spoken warnings per scam type,</text>
+  <text x="794" y="382" class="s">streamed edge-tts answers</text>
+  <text x="794" y="396" class="own" fill="#7c3aed">C</text>
+
+  <rect x="780" y="424" width="290" height="70" class="box"/>
+  <text x="794" y="450" class="t">Offline artifacts + eval</text>
+  <text x="794" y="470" class="s">fingerprint_index.pkl, script_embeddings.npy,</text>
+  <text x="794" y="486" class="s">fusion_config.json, results/summary.json</text>
+
+  <!-- arrows -->
+  <path d="M220,160 L250,160" class="ln"/>
+  <path d="M345,262 L345,290" class="ln"/>
+  <path d="M440,160 L470,160" class="ln"/>
+  <path d="M440,190 C455,190 455,290 470,290" class="ln"/>
+  <path d="M440,220 C458,220 458,410 470,410" class="ln"/>
+  <path d="M750,164 L780,164" class="ln"/>
+  <path d="M750,294 C765,294 765,200 780,200" class="ln"/>
+  <path d="M750,418 C770,418 770,232 780,232" class="ln"/>
+  <path d="M925,252 L925,272" class="ln"/>
+  <path d="M780,338 L765,338 L765,522 L125,522 L125,498" class="ln"/>
+  <path d="M125,522 L8,522 L8,311 L28,311" class="ln"/>
+  <text x="300" y="514" class="s">risk events, alerts, transcript, viz, agent replies (JSON over WebSocket / REST)</text>
+</svg>
