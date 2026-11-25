@@ -36,24 +36,41 @@ def is_grounded(reply: str, evidence: Evidence) -> bool:
     return True
 
 
+_INTENTS = [   # (name, regex): first match wins; checked in this order
+    ("greeting", r"^(hi|hello|hey|hola|namaste|good (morning|afternoon|evening))\b"),
+    ("closing", r"\b(thank(s| you)|bye|goodbye|take care|see you|that'?s all|all good)\b"),
+    ("identity", r"\b(who|what) (are|r) (you|u)\b|\byour name\b|\bwho (made|built|created) you\b|\bwhat is scamshield\b|\bare you (a )?(bot|human|robot|ai)\b"),
+    ("capability", r"\b(what can you do|how do you work|how does (this|it) work|what do you do)\b"),
+    ("why", r"\b(why|how do you know|reason|evidence|what makes)\b"),
+    ("what_to_do", r"\b(what (should|do|can) i|what now|next steps?|report)\b"),
+    ("is_it", r"\b(is (it|this|that)|scam|safe|real|genuine|fake|sure)\b"),
+]
+
+
 def _intent(q: str) -> str:
-    q = q.lower()
-    if re.search(r"\b(why|how do you know|reason|evidence|what makes)\b", q):
-        return "why"
-    if re.search(r"\b(what (should|do|can) i|what now|help|next|steps?|report)\b", q):
-        return "what_to_do"
-    if re.search(r"\b(is (it|this|that)|scam|safe|real|genuine|fake|sure)\b", q):
-        return "is_it"
+    q = q.lower().strip()
+    for name, pattern in _INTENTS:
+        if re.search(pattern, q) and (name != "greeting" or len(q.split()) <= 4):
+            return name
     return "other"
 
 
 def offline_answer(question: str, ev: Evidence) -> str:
-    """Template reply built only from Evidence (AGENT_OFFLINE=1, no key, or LLM failure)."""
+    """Template reply built only from Evidence and fixed descriptions of ScamShield (AGENT_OFFLINE=1, no key, or LLM failure)."""
     r, intent = ev.risk, _intent(question)
     risky = r.level in ("high", "scam")
     kind = TYPE_NAMES.get(ev.scam_type_guess or "", "scam")
+    if intent == "greeting":
+        return "Hi, I'm ScamShield. Ask me why this call was flagged, or what you should do."
+    if intent == "closing":
+        return "You're welcome. Stay safe, and hang up if they ring back." if risky else "You're welcome. Take care."
+    if intent == "identity":
+        return "I'm ScamShield, a voice assistant that listens to calls and tells you whether they look like scams, and why."
+    if intent == "capability":
+        return ("I compare a call with known scam recordings, check what is being said, and explain my reasoning. "
+                "Ask me why it was flagged or what to do.")
     if intent == "other":
-        return "I can only help with this call. Ask me why it was flagged, or what you should do."
+        return "That's outside what I can help with, but I'm happy to explain this call."
     if not risky and intent in ("why", "is_it"):
         return (f"I found no strong scam signs in this call; the risk is {r.score:.0f} out of 100. "
                 "If you are unsure, hang up and call the official number yourself.")

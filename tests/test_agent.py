@@ -22,7 +22,7 @@ def offline(monkeypatch):
 
 
 def test_prompt_contains_rules_and_evidence():
-    assert "ONLY" in system_prompt() and "3 short sentences" in system_prompt()
+    assert "ONLY" in system_prompt() and "three at most" in system_prompt() and "SMALL TALK" in system_prompt()
     p = build_user_prompt("why?", ev())
     assert "92/100" in p and "digital-arrest" in p and "QUESTION: why?" in p
 
@@ -32,7 +32,7 @@ def test_offline_answers_are_grounded_and_short():
     for q in ["Why do you think it's a scam?", "What should I do?", "Is this real?"]:
         r = a.answer(q, ev(), [])
         assert r.text and len([s for s in r.text.split(". ") if s]) <= 3 and is_grounded(r.text, ev())
-    assert "only help with this call" in a.answer("What's the weather?", ev(), []).text
+    assert "outside what I can help with" in a.answer("What's the weather?", ev(), []).text
 
 
 def test_safe_call_does_not_alarm():
@@ -68,3 +68,12 @@ def test_llm_failure_falls_back(monkeypatch):
 def test_limit_sentences_keeps_hyphens_and_strips_markdown():
     assert limit_sentences("**Likely** a digital-arrest scam.\n- Hang up.\n- Call cybercrime.gov.in now. Four.") == \
         "Likely a digital-arrest scam. Hang up. Call cybercrime.gov.in now."
+
+
+def test_conversation_manners_offline():
+    a = Agent()
+    assert "ScamShield" in a.answer("What are you?", ev(), []).text and "scam" not in a.answer("Hello", ev(), []).text.lower().replace("scamshield", "")
+    thanks = a.answer("Okay, thank you. Bye-bye.", ev(), []).text
+    assert "welcome" in thanks.lower() and "OTP" not in thanks and len(thanks.split()) < 15      # not the scam warning again
+    assert "compare" in a.answer("What can you do?", ev(), []).text
+    assert "risk" in a.answer("Why do you think it's a scam?", ev(), []).text or "because" in a.answer("Why?", ev(), []).text
