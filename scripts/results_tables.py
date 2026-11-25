@@ -30,8 +30,8 @@ def main() -> None:
           f"query p50 {l1['query_ms_p50']} ms)\n")
     print(md(l1["by_augmentation"], ["augmentation", "n", "recall_at_1", "median_aligned", "min_aligned"]))
     print(f"\n**Layer 2: script + red flags** (sanity: library scripts read by other voices). AUC script similarity "
-          f"{l2['auc_script_sim']}, red flags {l2['auc_redflags']}; scam-type top-1 {l2['scam_type_top1_accuracy']}; "
-          f"by language: " + ", ".join(f"{k}: AUC {v['auc_script_sim']} (n={v['n']})" for k, v in l2["by_language"].items())
+          f"{l2['auc_script_sim']} (old similarity-to-library), **learned wording model {l2.get('auc_text_model')}**, red flags {l2['auc_redflags']}; scam-type top-1 {l2['scam_type_top1_accuracy']}; "
+          f"by language (wording model): " + ", ".join(f"{k}: AUC {v.get('auc_text_model', v['auc_script_sim'])} (n={v['n']})" for k, v in l2["by_language"].items())
           + "; STT WER (English): " + ", ".join(f"{k} {v}" for k, v in l2["wer_en_by_aug"].items()) + "\n")
     print("**Fusion + ablation** (flagged = level high or scam)\n")
     print(md(s["ablation"], ["config", "precision", "recall", "f1", "fpr_legit", "auc"]))

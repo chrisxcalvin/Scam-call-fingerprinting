@@ -585,13 +585,16 @@ async function init() {
 
 /* ================= evaluation tab ================= */
 let results = null, splitKey = null;
-const SPLIT_INFO = {test: ["Test", "run once · honest"], holdout: ["Holdout", "new scripts · unseen voices"], dev: ["Dev", "calibration · optimistic"]};
+const SPLIT_INFO = {test2: ["Test 2", "locked · new model and prompt"], test: ["Test", "library scripts · run once"], holdout: ["Holdout", "hand-written rewordings"],
+  dev2: ["Dev 2", "calibration · optimistic"], dev: ["Dev", "calibration · optimistic"]};
 function kpi(label, value, sub, tone) { return `<div class="kpi ${tone || ""}"><span>${esc(label)}</span><b>${value}</b><small>${esc(sub)}</small></div>`; }
 const toneHi = (v, g = 0.95, w = 0.85) => (v >= g ? "good" : v >= w ? "warn" : "bad");
 const toneLo = (v, g = 0.02, w = 0.07) => (v <= g ? "good" : v <= w ? "warn" : "bad");
 function renderSplit(name, s) {
   const f = s.fusion, l1 = s.layer1, l2 = s.layer2, lv = s.live, aug = l1.by_augmentation || [];
-  const note = name === "dev" ? ["warn", "Thresholds were tuned on this split, so these numbers are optimistic. Look at Test and Holdout for the honest picture."]
+  const note = name === "test2" ? ["ok", l2.note]
+    : name === "dev2" ? ["warn", l2.note]
+    : name === "dev" ? ["warn", "Thresholds were tuned on this split, so these numbers are optimistic. Look at Test and Holdout for the honest picture."]
     : name === "test" ? ["warn", "Run once with the dev-calibrated thresholds. The script layer is a sanity check here: the same scam scripts read by different voices. Hinglish read with a British accent is the weak spot."]
     : ["ok", l2.note];
   const meanRecall = aug.length ? aug.reduce((a, r) => a + r.recall_at_1, 0) / aug.length : null;
@@ -610,8 +613,8 @@ function renderSplit(name, s) {
     <article class="card"><h3>Fingerprint by condition</h3><p class="muted">Recall@1: the right known recording is the top match. Threshold ${l1.threshold_aligned_hashes} aligned hashes.</p>
       ${aug.length ? `<div class="bars" id="r-aug"></div>` : `<p class="muted">No indexed audio appears in this split, so every match would be a false match.</p>`}
       <ul class="ls"><li><span>False matches (legit audio or wrong script)</span><b>${l1.false_match_rate == null ? "–" : pct(l1.false_match_rate, 1)} of ${l1.n_negatives}</b></li><li><span>Same script, other speaking rate</span><b>${pct(l1.same_script_near_copy_match_rate, 0)} matched (n=${l1.n_same_script_near_copies})</b></li><li><span>Lookup time (median)</span><b>${l1.query_ms_p50} ms</b></li></ul></article>
-    <article class="card"><h3>Script layer by language</h3><p class="muted">AUC: how well scam and legit separate (1.0 is perfect, 0.5 is chance).</p><div class="bars" id="r-lang"></div>
-      <ul class="ls"><li><span>Script similarity AUC</span><b>${l2.auc_script_sim}</b></li><li><span>Red-flag AUC</span><b>${l2.auc_redflags}</b></li><li><span>Scam type identified</span><b>${pct(l2.scam_type_top1_accuracy, 0)}</b></li><li><span>Word error rate (English, clean)</span><b>${pct(l2.wer_en_by_aug.clean, 1)}</b></li></ul></article>
+    <article class="card"><h3>Wording model by language</h3><p class="muted">AUC: how well scam and legit wording separate (1.0 is perfect, 0.5 is chance).</p><div class="bars" id="r-lang"></div>
+      <ul class="ls"><li><span>Wording model AUC</span><b>${l2.auc_text_model != null ? l2.auc_text_model : "–"}</b></li><li><span>Old similarity-to-library AUC</span><b>${l2.auc_script_sim}</b></li><li><span>Red-flag AUC</span><b>${l2.auc_redflags}</b></li><li><span>Scam type identified</span><b>${pct(l2.scam_type_top1_accuracy, 0)}</b></li><li><span>Word error rate (English, clean)</span><b>${pct(l2.wer_en_by_aug.clean, 1)}</b></li></ul></article>
     <article class="card"><h3>What each layer contributes</h3><p class="muted">Share of scam clips flagged (high or scam). Fusion beats any single layer.</p><div class="bars" id="r-abl"></div>
       <p class="muted small" style="margin-top:12px">False alarms on legit: ${s.ablation.map((a) => `${a.config} ${pct(a.fpr_legit, 1)}`).join(" · ")}</p></article>
     <article class="card"><h3>Flagged vs not flagged</h3><p class="muted">Every clip in this split, using the full system.</p>
@@ -631,7 +634,7 @@ function renderSplit(name, s) {
 function fillResultBars(s) {
   const aug = s.layer1.by_augmentation || [];
   if ($("r-aug")) barRows($("r-aug"), aug.map((r) => [`${r.augmentation} (n=${r.n})`, r.recall_at_1]), {fmt: (v) => pct(v, 0), tone: (v) => (v >= 0.95 ? "good" : v >= 0.8 ? "warn" : "bad")});
-  barRows($("r-lang"), Object.entries(s.layer2.by_language).map(([k, v]) => [{en: "English", hi: "Hinglish"}[k] || k, v.auc_script_sim]), {tone: (v) => (v >= 0.95 ? "good" : v >= 0.85 ? "warn" : "bad")});
+  barRows($("r-lang"), Object.entries(s.layer2.by_language).map(([k, v]) => [{en: "English", hi: "Hinglish"}[k] || k, v.auc_text_model != null ? v.auc_text_model : v.auc_script_sim]), {tone: (v) => (v >= 0.95 ? "good" : v >= 0.85 ? "warn" : "bad")});
   barRows($("r-abl"), s.ablation.filter((a) => a.config !== "voice only").map((a) => [a.config, a.recall]), {fmt: (v) => pct(v, 0), tone: (v) => (v >= 0.85 ? "good" : v >= 0.5 ? "warn" : "bad")});
   const tm = s.timings.filter((x) => !["total", "red_flags", "decode", "preprocess"].includes(x.stage));
   barRows($("r-time"), tm.map((x) => [x.stage.replace("_", " "), x.p50_ms]), {max: Math.max(...tm.map((x) => x.p50_ms)), fmt: (v) => v.toFixed(0)});
