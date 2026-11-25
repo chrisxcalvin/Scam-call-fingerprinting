@@ -428,7 +428,11 @@ function liveEvent(e) {
     addBubble("agent warn", e.message); sayAudio(e.audio_url, e.message);
   } else if (e.type === "final") {
     const log = $("agent-log").innerHTML; live = null; setLiveUI(false);
-    $("clip-meta").textContent = `${e.result.duration_s.toFixed(1)} s · live call ended`;
+    const dg = e.diag; $("clip-meta").textContent = `${e.result.duration_s.toFixed(1)} s · live call ended` + (dg ? ` · heard up to ${(dg.peak * 100).toFixed(1)}% volume` : "");
+    if (dg && dg.audio_s > 4 && !dg.transcript_segments && dg.peak < 0.02) {
+      neutralBanner(dg.zero_frac > 0.9 ? `The server received ${dg.audio_s} s of pure silence (${Math.round(dg.zero_frac * 100)}% exactly zero): the browser sent no sound. Run the microphone test.`
+        : `The server heard ${dg.audio_s} s of audio, but it was very quiet (loudest ${(dg.peak * 100).toFixed(2)}%). Turn the microphone input volume up in Windows sound settings, or speak closer.`);
+    }
     render(e.result, {keepAlert: true, keepChat: true}); $("agent-log").innerHTML = log; $("agent-log").scrollTop = 1e9;
   } else if (e.type === "error") { setStatus("Error", "err"); addBubble("agent", e.message); }
 }

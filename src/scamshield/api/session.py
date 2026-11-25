@@ -92,6 +92,8 @@ class LiveSession:
     spec_ref_db: float = -1e9
     viz_t: float = 0.0
     tick_ms: list = field(default_factory=list)
+    peak: float = 0.0                                  # loudest absolute sample received (0..1)
+    zero_samples: int = 0                              # samples that were exactly zero (a muted/blocked source)
 
     def __post_init__(self) -> None:
         self.cfg = load_config()
@@ -112,6 +114,9 @@ class LiveSession:
         x = np.frombuffer(pcm16[: len(pcm16) // 2 * 2], dtype="<i2").astype(np.float32) / 32768.0
         self.audio.append(x)
         self.n_samples += x.size
+        if x.size:
+            self.peak = max(self.peak, float(np.max(np.abs(x))))
+            self.zero_samples += int(np.count_nonzero(x == 0))
 
     def signal(self, t0: float = 0.0, t1: float | None = None) -> np.ndarray:
         """Audio between t0 and t1 seconds (concatenates chunks lazily)."""
@@ -231,6 +236,13 @@ class LiveSession:
         return {"type": "viz", "t_s": round(now, 2), "waveform": wf,
                 "spec_cols_b64": base64.b64encode(np.ascontiguousarray(u8.T).tobytes()).decode(),
                 "spec_cols": int(u8.shape[1]), "spec_rows": int(u8.shape[0])}
+
+    def diag(self) -> dict:
+        """What the server actually received: used to tell 'browser sent silence' from 'microphone too quiet'."""
+        n = max(1, self.n_samples)
+        rms = float(np.sqrt(np.mean(self.signal().astype(np.float64) ** 2))) if self.n_samples else 0.0
+        return {"audio_s": round(self.duration_s, 1), "peak": round(self.peak, 4), "rms": round(rms, 5),
+                "zero_frac": round(self.zero_samples / n, 3), "transcript_segments": len(self.transcript)}
 
     def snapshot(self) -> Evidence:
         """Current Evidence (what the agent may talk about)."""

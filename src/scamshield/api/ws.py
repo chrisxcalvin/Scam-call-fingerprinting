@@ -36,7 +36,10 @@ async def live(ws: WebSocket) -> None:
 
     async def send(events: list[dict]) -> None:
         for e in events:
-            await ws.send_text(json.dumps(e))
+            try:
+                await ws.send_text(json.dumps(e))
+            except (RuntimeError, WebSocketDisconnect):   # the browser tab closed or reloaded: nothing to deliver to
+                return
 
     async def worker() -> None:
         while not stop.is_set():
@@ -77,8 +80,11 @@ async def live(ws: WebSocket) -> None:
             # keep the live timeline (what the user actually saw) in the final result
             result.risk_timeline = sess.timeline or result.risk_timeline
             _remember(_evidence, sess.session_id, evidence, MAX_SESSIONS)
-            await ws.send_json({"type": "final", "result": json.loads(result.model_dump_json())})
+            await ws.send_json({"type": "final", "result": json.loads(result.model_dump_json()), "diag": sess.diag()})
+            log.info("live call %s: %s", sess.session_id, sess.diag())
         await ws.close()
+    except (RuntimeError, WebSocketDisconnect):
+        log.info("client left before the live call was finalised")
     except Exception:
         log.exception("live finalisation failed")
         try:
