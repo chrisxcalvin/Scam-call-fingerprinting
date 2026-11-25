@@ -74,6 +74,7 @@
 
     <!-- home: nothing analysed yet -->
     <div id="home" class="home">
+      <div id="home-alert" class="banner" data-kind="neutral" role="alert" hidden><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg><span id="home-alert-text"></span></div>
       <div class="hero">
         <span class="eyebrow"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg> Real-time scam-call protection</span>
         <h1>Is this call a <em>scam</em>?</h1>
@@ -83,7 +84,7 @@
           <button id="btn-upload" class="btn tonal lg"><svg class="ic" aria-hidden="true"><use href="#i-upload"/></svg>Upload a recording</button>
           <input id="file" type="file" accept=".wav,.mp3,.m4a,.webm,audio/*" hidden>
         </div>
-        <p class="hint">Or drop an audio file anywhere on this page · wav, mp3, m4a, webm · up to 5 minutes</p>
+        <p class="hint">Or drop an audio file anywhere on this page · wav, mp3, m4a, webm · up to 5 minutes · <a href="/mic-test.html" style="color:inherit">Test your microphone</a></p>
       </div>
 
       <ul class="how" aria-label="How it checks a call">

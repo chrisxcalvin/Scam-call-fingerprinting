@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Microphone test · ScamShield Voice</title>
+<style>
+  body{margin:0;background:#0b0d12;color:#eef1f8;font:15px/1.55 system-ui,"Segoe UI",sans-serif;padding:32px 20px}
+  main{max-width:760px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 4px} p.sub{color:#9ba5bb;margin:0 0 20px}
+  button{background:#8ab4ff;color:#08183a;border:0;border-radius:999px;padding:12px 22px;font:600 15px system-ui;cursor:pointer}
+  ol{list-style:none;padding:0;margin:20px 0;display:flex;flex-direction:column;gap:8px}
+  li{background:#12151d;border:1px solid #242a39;border-radius:12px;padding:12px 16px;display:grid;grid-template-columns:28px 1fr;gap:10px}
+  li .i{font-weight:700} li.ok .i{color:#3dd897} li.bad .i{color:#ff6b6b} li.warn .i{color:#fbc02d} li.wait .i{color:#667088}
+  li small{display:block;color:#9ba5bb;word-break:break-word}
+  .bar{height:14px;background:#202636;border-radius:7px;overflow:hidden;margin:6px 0} .bar i{display:block;height:100%;width:0;background:#3dd897;transition:width .08s}
+  #verdict{padding:16px 18px;border-radius:14px;margin-top:8px;display:none;font-weight:600}
+  #verdict.ok{display:block;background:rgba(61,216,151,.12);border:1px solid #3dd897} #verdict.bad{display:block;background:rgba(255,107,107,.12);border:1px solid #ff6b6b}
+  #verdict div{font-weight:400;margin-top:6px;color:#dfe4f0} code{background:#181c26;padding:1px 6px;border-radius:6px}
+  a{color:#8ab4ff}
+</style>
+</head>
+<body><main>
+<h1>Microphone test</h1>
+<p class="sub">Checks every step the live call needs and tells you exactly which one fails. <a href="/">Back to ScamShield</a></p>
+<button id="go">Run the test</button>
+<ol id="steps"></ol>
+<div class="bar" id="barwrap" hidden><i id="bar"></i></div>
+<div id="verdict"></div>
+<script>
+const steps = document.getElementById("steps");
+function add(state, title, detail) {
+  const li = document.createElement("li"); li.className = state;
+  li.innerHTML = `<span class="i">${{ok: "✓", bad: "✗", warn: "!", wait: "…"}[state]}</span><div><b>${title}</b><small>${detail || ""}</small></div>`;
+  steps.appendChild(li); return li;
+}
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const fails = [];
+function verdict(ok, title, advice) {
+  const v = document.getElementById("verdict"); v.className = ok ? "ok" : "bad";
+  v.innerHTML = `${title}<div>${advice}</div>`;
+}
+document.getElementById("go").addEventListener("click", async () => {
+  steps.innerHTML = ""; fails.length = 0; document.getElementById("verdict").className = "";
+  const ua = navigator.userAgent, embedded = /Electron|Code\/|Antigravity|vscode/i.test(ua);
+  add(embedded ? "bad" : "ok", "Browser", embedded ? `This looks like an embedded IDE browser (${ua.slice(0, 120)}). These usually block the microphone: open the link in Chrome or Edge.` : ua.slice(0, 140));
+  if (embedded) fails.push("embedded");
+  const host = location.hostname, secure = window.isSecureContext;
+  add(secure ? "ok" : "bad", "Secure page address", `${location.href}: ${secure ? "secure context: the microphone is allowed here" : "NOT a secure context: browsers hide the microphone. Open http://localhost:" + (location.port || "8000") + " (not 0.0.0.0 or a network IP)."}`);
+  if (!secure) fails.push("insecure");
+  const hasMD = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  add(hasMD ? "ok" : "bad", "Microphone API available", hasMD ? "navigator.mediaDevices.getUserMedia exists" : "missing: caused by the insecure address or an embedded browser");
+  if (!hasMD) { fails.push("api"); finish(); return; }
+  try { const p = await navigator.permissions.query({name: "microphone"}); add(p.state === "denied" ? "bad" : "ok", "Microphone permission", `state: ${p.state}${p.state === "denied" ? ". Click the lock/tune icon in the address bar → Microphone → Allow, then reload." : ""}`); if (p.state === "denied") fails.push("denied"); }
+  catch { add("warn", "Microphone permission", "this browser does not report it (fine)"); }
+  let devs = []; try { devs = (await navigator.mediaDevices.enumerateDevices()).filter((d) => d.kind === "audioinput"); } catch {}
+  add(devs.length ? "ok" : "bad", "Input devices", devs.length ? devs.map((d) => d.label || "(name hidden until allowed)").join(" · ") : "no audio input devices are visible to the browser");
+  if (!devs.length) fails.push("nodev");
+  const w = add("wait", "Opening the microphone", "if a permission box appears, click Allow");
+  let stream;
+  try { stream = await navigator.mediaDevices.getUserMedia({audio: {echoCancellation: true, noiseSuppression: true}}); w.className = "ok"; w.querySelector(".i").textContent = "✓"; w.querySelector("small").textContent = "granted"; }
+  catch (e) { w.className = "bad"; w.querySelector(".i").textContent = "✗"; w.querySelector("small").textContent = `${e.name}: ${e.message}`; fails.push("gum:" + e.name); finish(); return; }
+  const tr = stream.getAudioTracks()[0], st = tr.getSettings();
+  add(tr.readyState === "live" && !tr.muted ? "ok" : "bad", "Microphone track", `${tr.label} · ${st.sampleRate || "?"} Hz · state ${tr.readyState}${tr.muted ? " · MUTED by the system or browser" : ""}`);
+  if (tr.muted || tr.readyState !== "live") fails.push("muted");
+  let ctx, an;
+  try {
+    ctx = new AudioContext(); await ctx.resume();
+    add(ctx.state === "running" ? "ok" : "bad", "Audio engine", `state ${ctx.state} · ${ctx.sampleRate} Hz`);
+    if (ctx.state !== "running") fails.push("ctx");
+    an = ctx.createAnalyser(); an.fftSize = 1024; ctx.createMediaStreamSource(stream).connect(an);
+  } catch (e) { add("bad", "Audio engine", `${e.name}: ${e.message}`); fails.push("ctx"); }
+  try { const c2 = new AudioContext({sampleRate: 16000}); await c2.audioWorklet.addModule("pcm-worklet.js"); add("ok", "Audio worklet (16 kHz)", `loaded; context runs at ${c2.sampleRate} Hz`); c2.close(); }
+  catch (e) { add("bad", "Audio worklet (16 kHz)", `${e.name}: ${e.message}`); fails.push("worklet"); }
+  if (an) {
+    add("wait", "Listening for 6 seconds", "say something or clap");
+    document.getElementById("barwrap").hidden = false;
+    const buf = new Float32Array(an.fftSize); let peak = 0; const t0 = performance.now();
+    while (performance.now() - t0 < 6000) { an.getFloatTimeDomainData(buf); let m = 0; for (const v of buf) m = Math.max(m, Math.abs(v)); peak = Math.max(peak, m); document.getElementById("bar").style.width = Math.min(100, m * 400) + "%"; await sleep(50); }
+    const heard = peak > 0.01;
+    steps.lastElementChild.className = heard ? "ok" : "bad"; steps.lastElementChild.querySelector(".i").textContent = heard ? "✓" : "✗";
+    steps.lastElementChild.querySelector("small").textContent = `loudest level ${(peak * 100).toFixed(1)}%${heard ? "" : ": the microphone opened but sent silence"}`;
+    if (!heard) fails.push("silent");
+  }
+  stream.getTracks().forEach((t) => t.stop()); ctx && ctx.close(); finish();
+});
+function finish() {
+  const f = fails;
+  if (!f.length) return verdict(true, "Your microphone works in this browser.", "If the live call still shows nothing, reload ScamShield with Ctrl+F5 and try again, and tell me the exact message it shows.");
+  const adv = [];
+  if (f.includes("embedded")) adv.push("Open <code>http://localhost:" + (location.port || "8000") + "</code> in <b>Chrome or Edge</b>, not in the IDE's preview.");
+  if (f.includes("insecure") || f.includes("api")) adv.push("Use <code>http://localhost:" + (location.port || "8000") + "</code>. Addresses like <code>0.0.0.0</code> or <code>192.168…</code> have no microphone access.");
+  if (f.includes("denied") || f.some((x) => x.startsWith("gum:NotAllowed"))) adv.push("Permission is blocked: click the icon at the left of the address bar → Microphone → Allow → reload. Also check Windows Settings → Privacy &amp; security → Microphone → allow desktop apps.");
+  if (f.includes("nodev") || f.some((x) => x.startsWith("gum:NotFound"))) adv.push("The browser sees no microphone. Pick the right input device in Windows Sound settings and check that Chrome is allowed to use it.");
+  if (f.some((x) => x.startsWith("gum:NotReadable"))) adv.push("Another app is holding the microphone (Zoom, Teams, Discord, a recorder). Close it and retry.");
+  if (f.includes("muted") || f.includes("silent")) adv.push("The microphone is opened but silent: check it isn't muted (hardware key, Windows sound settings) and that the right device is the default input.");
+  if (f.includes("ctx") || f.includes("worklet")) adv.push("The browser audio engine failed: use an up-to-date Chrome or Edge.");
+  verdict(false, "Found the problem:", adv.join("<br>") || "See the red steps above and send them to me.");
+}
+</script>
+</main></body>
+</html>

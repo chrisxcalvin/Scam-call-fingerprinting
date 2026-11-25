@@ -457,16 +457,13 @@ function makeResampler(inRate) {                      // linear resampler to 16 
   };
 }
 function setMeter(level) { const m = $("mic-meter"); m.hidden = level == null; if (level != null) m.firstElementChild.style.width = `${Math.min(100, Math.round(Math.sqrt(level) * 260))}%`; }
-async function startMic() {
+async function startMicInner() {
   // Create the AudioContext NOW, synchronously inside the click: browsers only let it run if it is created while the
   // click's user activation is still valid, and the permission prompt below can take longer than that window.
   let ctx; try { ctx = new AudioContext({sampleRate: 16000}); } catch { ctx = new AudioContext(); }
   let stream;
   try { stream = await navigator.mediaDevices.getUserMedia({audio: {echoCancellation: true, noiseSuppression: true, channelCount: 1}}); }
-  catch (err) {
-    ctx.close(); showSession(false); setStatus("Mic blocked", "err");
-    neutralBanner(err && err.name === "NotFoundError" ? "No microphone was found. Plug one in, or upload a recording instead." : "Microphone permission was denied. Allow it in the address bar, or upload a recording or try an example instead."); return;
-  }
+  catch (err) { ctx.close(); throw err; }
   const ws = await openLive("mic", "Live call (microphone)").catch(() => null);
   if (!ws) { stream.getTracks().forEach((t) => t.stop()); ctx.close(); showSession(false); return; }
   await ctx.resume();                                  // a context created before a long permission prompt may still be suspended
@@ -486,6 +483,28 @@ async function startMic() {
   };
   src.connect(node);
   live.stopFn = () => { setMeter(null); src.disconnect(); node.disconnect(); stream.getTracks().forEach((t) => t.stop()); ctx.close(); if (ws.readyState === 1) ws.send(JSON.stringify({type: "stop"})); setStatus("Finishing…", "busy"); };
+}
+function homeError(msg) {
+  const el = $("home-alert"); $("home-alert-text").textContent = msg + " ";
+  const a = document.createElement("a"); a.href = "/mic-test.html"; a.textContent = "Run the microphone test"; a.style.cssText = "color:var(--primary);font-weight:600;margin-left:4px";
+  $("home-alert-text").appendChild(a); el.hidden = false; setStatus("Mic problem", "err");
+}
+async function startMic() {
+  $("home-alert").hidden = true;
+  const embedded = /Electron|Code\/|Antigravity|vscode/i.test(navigator.userAgent);
+  if (!window.isSecureContext || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    return homeError(`The browser is hiding the microphone from this page (${embedded ? "this looks like an embedded IDE browser" : `address ${location.host} is not a secure context`}). Open http://localhost:${location.port || 80} in Chrome or Edge.`);
+  }
+  try { await startMicInner(); }
+  catch (err) {
+    if (live && live.ws) { try { live.ws.close(); } catch {} }
+    live = null; setLiveUI(false); setMeter(null); showSession(false);
+    const n = err && err.name;
+    homeError(n === "NotAllowedError" || n === "SecurityError" ? "Microphone permission is blocked. Click the icon at the left of the address bar, allow the microphone, and reload."
+      : n === "NotFoundError" ? "The browser can't find a microphone. Check the input device in Windows sound settings."
+      : n === "NotReadableError" ? "Another app is holding the microphone (Zoom, Teams, Discord…). Close it and try again."
+      : `Microphone setup failed (${n || "error"}: ${err && err.message ? err.message : "unknown"}).`);
+  }
 }
 const neutralBanner = (t) => { showSession(true); banner(t, "neutral"); };
 async function simulateLive(id, title) {
