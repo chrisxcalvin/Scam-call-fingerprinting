@@ -66,7 +66,11 @@ def main() -> None:
     if not args.skip_embeddings:
         from scamshield.understanding.script_match import ScriptLibrary
         t0 = time.time()
-        sl = ScriptLibrary.build(scripts)
+        corpus = [x for n in ("train.json", "train_direct.json") for x in json.load(open(ROOT / "scripts" / "corpus" / n, encoding="utf-8"))
+                  if x["label"] == "scam"]
+        lib_scripts = scripts + [{"id": x["id"], "label": "scam", "type": x["type"], "lang": x["lang"], "text": x["text"]} for x in corpus]
+        sl = ScriptLibrary.build(lib_scripts)
+        print(f"script library: {len(scripts)} original + {len(corpus)} generated scam scripts")
         np.save(ARTIFACTS_DIR / "script_embeddings.npy", sl.emb)
         meta["chunks"] = sl.chunks
         print(f"embeddings: {len(sl.chunks)} chunks x {sl.emb.shape[1]}-d, {time.time() - t0:.1f}s")

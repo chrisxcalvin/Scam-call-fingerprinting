@@ -160,7 +160,7 @@ class LiveSession:
         self.script = self._sm_cache[text]
         self.flags = red_flags(self.transcript)
         state = _fuse_layers(self.fp_hit.scam_type if self.fp_hit else None, self.fp_hit.score if self.fp_hit else 0.0,
-                             self.script, self.flags, text, self.cfg, now)
+                             self.script, self.flags, text, self.cfg, now, self.models)
         level, alert = self.tracker.update(state.score, now, self.fp_hit is not None)
         state = state.model_copy(update={"level": level})
         self.last_state = state

@@ -192,7 +192,9 @@ async def agent_ask_audio(session_id: str = Form(...), file: UploadFile = File(.
     try:
         x, sr = await run_in_threadpool(load_audio, data)
     except Exception:
-        return error(415, "bad_audio", "Could not decode the recording.")
+        import shutil
+        hint = "" if shutil.which("ffmpeg") else " ffmpeg is not installed on the server (needed for microphone recordings): install it and restart."
+        return error(415, "bad_audio", "Could not decode the recording." + hint)
     if len(x) / sr > 30:
         return error(413, "too_long", "Questions must be shorter than 30 seconds.")
     segs = await run_in_threadpool(transcribe, preprocess(x, sr), TARGET_SR)

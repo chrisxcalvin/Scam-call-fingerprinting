@@ -34,7 +34,7 @@ def test_gsm_scam_clip_fingerprint_hit(client):
 def test_other_voice_scam_caught_by_script_layer(client):
     j = _post(client, DATA_DIR / "clean" / "scam_digital_arrest_en__enUS_Guy__normal.wav").json()
     assert not j["fingerprint"] or j["fingerprint"][0]["aligned_hashes"] < 50
-    assert j["script"][0]["script_id"] == "scam_digital_arrest_en" and j["final"]["score"] >= 60
+    assert j["script"][0]["scam_type"] == "digital_arrest" and j["final"]["score"] >= 60
 
 
 def test_legit_bank_alert_negated(client):

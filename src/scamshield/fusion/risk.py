@@ -30,6 +30,12 @@ def script_component(similarity: float, cfg: dict | None = None) -> float:
     return round(min(1.0, max(0.0, (similarity - lo) / (hi - lo))), 4)
 
 
+def text_component(decision: float, cfg: dict | None = None) -> float:
+    """Learned text model (Layer 2): decision value -> 0..1 with the dev-calibrated `text_range`."""
+    from ..understanding.text_model import to_component
+    return to_component(decision, (cfg or load_config())["text_range"])
+
+
 def level_of(score: float, bounds: list[float] | tuple[float, ...] = LEVEL_BOUNDS) -> Level:
     """<30 safe | 30-60 suspicious | 60-85 high | >=85 scam."""
     if score >= bounds[2]:
@@ -68,8 +74,10 @@ def fuse(components: RiskComponents, fp_hit: bool, *, t_s: float = 0.0, details:
         reasons.append((9.0, f"Audio matches a known {str(d.get('fp_scam_type', 'scam')).replace('_', ' ')} scam recording"))
     if s["script"] > 0:
         how = "closely match" if s["script"] >= 0.5 else "partly resemble"
+        kind = str(d.get("script_scam_type", "scam")).replace("_", " ")
         reasons.append((w["script"] * s["script"],
-                        f"Words {how} a known {str(d.get('script_scam_type', 'scam')).replace('_', ' ')} script (similarity {d.get('similarity', 0):.2f})"))
+                        f"The wording is typical of a {kind} scam" if d.get("learned") else
+                        f"Words {how} a known {kind} script (similarity {d.get('similarity', 0):.2f})"))
     for cat in d.get("flag_categories", [])[:3]:
         reasons.append((w["redflags"] * s["redflags"] * 0.99, f"Caller {CATEGORY_TEXT.get(cat, cat)}"))
     if safe_context:

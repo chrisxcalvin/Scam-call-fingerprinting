@@ -13,7 +13,8 @@ _TYPE_TEXT = {
     "tech_support": "This call is likely a tech-support scam. Do not install any app they ask for.",
     "generic": "This call shows several warning signs of a scam.",
 }
-WARNINGS: dict[str, str] = {f"warn_{k}": f"Warning. {v} {ADVICE}" for k, v in _TYPE_TEXT.items()}
+SPOKEN_ADVICE = "Hang up, and never share an OTP, a PIN or any money."      # short on purpose: the call is on hold while this plays
+WARNINGS: dict[str, str] = {f"warn_{k}": f"Warning. {v} {SPOKEN_ADVICE}" for k, v in _TYPE_TEXT.items()}
 TYPE_NAMES = {"digital_arrest": "digital-arrest", "kyc_otp": "KYC/OTP", "lottery_prize": "lottery-prize",
               "relative_emergency": "relative-in-trouble", "fake_courier": "fake-courier", "tech_support": "tech-support"}
 

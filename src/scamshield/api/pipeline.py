@@ -18,7 +18,7 @@ from ..fingerprint.index import FingerprintIndex
 from ..fingerprint.matcher import match, offset_histogram
 from ..fingerprint.peaks import find_peaks
 from ..fingerprint.spectrogram import spectrogram
-from ..fusion.risk import fuse, load_config, script_component
+from ..fusion.risk import fuse, load_config, script_component, text_component
 from ..schemas import AnalysisResult, Evidence, RiskComponents, RiskState, TranscriptSegment
 from ..understanding import stt
 from ..understanding.redflags import red_flags, redflag_score, safe_context_hits
@@ -36,6 +36,7 @@ class Models:
     index: FingerprintIndex | None = None
     fp_meta: dict = field(default_factory=dict)
     library: ScriptLibrary | None = None
+    text_model: object | None = None       # understanding.text_model.TextModel (learned Layer 2)
     stt_ready: bool = False
 
     def load(self, warm_stt: bool = True) -> "Models":
@@ -48,7 +49,10 @@ class Models:
                 self.fp_meta = {**self.fp_meta, "threshold": cfg["fp_threshold"]}
             if meta.get("chunks"):
                 self.library = ScriptLibrary.load()
-                embed(["warm-up"])                      # load the embedder now, not on the first request
+                embed(["warm-up"])
+            from ..understanding.text_model import MODEL_PATH, TextModel
+            if MODEL_PATH.exists():
+                self.text_model = TextModel.load()                      # load the embedder now, not on the first request
         else:
             log.warning("artifacts missing: run scripts/build_library.py")
         if warm_stt:
@@ -106,22 +110,28 @@ def risk_timeline(duration_s: float, hashes, transcript: list[TranscriptSegment]
             sm_cache[text] = script_match(text, models.library) if (models.library and text) else []
         sm = sm_cache[text]
         flags = red_flags(segs)
-        state = _fuse_layers(fp_hit_type, fp_best, sm, flags, text, cfg, t)
+        state = _fuse_layers(fp_hit_type, fp_best, sm, flags, text, cfg, t, models)
         out.append(state)
     return out
 
 
 def _fuse_layers(fp_hit_type: str | None, fp_score: float, sm: list, flags: list, text: str, cfg: dict,
-                 t_s: float) -> RiskState:
-    """Shared by the timeline and the final result: layer outputs -> components -> fuse()."""
+                 t_s: float, models: "Models | None" = None) -> RiskState:
+    """Shared by the timeline, the final result and the live session: layer outputs -> components -> fuse().
+    The script component comes from the learned text model when it and its calibrated `text_range` exist,
+    otherwise from cosine similarity to the closest known script (legacy)."""
     top_sm = sm[0] if sm else None
-    comps = RiskComponents(fingerprint=fp_score if fp_hit_type else 0.0,
-                           script=script_component(top_sm.similarity, cfg) if top_sm else 0.0,
+    learned = bool(models is not None and models.text_model is not None and cfg.get("text_range") and text.strip())
+    if learned:
+        script_c = text_component(float(models.text_model.decision([text])[0]), cfg)
+    else:
+        script_c = script_component(top_sm.similarity, cfg) if top_sm else 0.0
+    comps = RiskComponents(fingerprint=fp_score if fp_hit_type else 0.0, script=script_c,
                            redflags=redflag_score(flags), voice=0.0)   # voice not scored until calibrated
     neg_free = [f for f in flags if not f.negated]
     cats = sorted({f.category for f in neg_free}, key=lambda c: -max(f.weight for f in neg_free if f.category == c))
     details = {"fp_scam_type": fp_hit_type, "script_scam_type": top_sm.scam_type if top_sm else None,
-               "similarity": top_sm.similarity if top_sm else 0.0, "flag_categories": cats}
+               "similarity": top_sm.similarity if top_sm else 0.0, "flag_categories": cats, "learned": learned}
     return fuse(comps, fp_hit_type is not None, t_s=t_s, details=details,
                 safe_context=bool(safe_context_hits(text)), cfg=cfg)
 
@@ -177,7 +187,7 @@ def analyze_audio(data: bytes, models: Models, session_id: str | None = None,
     thr = models.fp_meta.get("threshold", float("inf"))
     fp_hit = bool(fp and fp[0].aligned_hashes >= thr)
     final = _fuse_layers(fp[0].scam_type if fp_hit else None, fp[0].score if fp_hit else 0.0, sm, flags, text,
-                         cfg, len(x) / sr)
+                         cfg, len(x) / sr, models)
     timeline = risk_timeline(len(x) / sr, hashes, transcript, models, cfg)
     timeline[-1] = final; t = lap("fusion", t)
     viz = build_viz(x, sr, S_db, segs, peaks, raw if sr0 == TARGET_SR else None)

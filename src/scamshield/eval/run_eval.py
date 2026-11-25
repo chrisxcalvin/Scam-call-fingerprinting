@@ -22,11 +22,13 @@ import numpy as np
 from ..api.pipeline import Models, analyze_audio
 from ..config import ARTIFACTS_DIR, DATA_DIR, FUSION_CONFIG_PATH, RESULTS_DIR, get_settings
 from ..fusion.risk import fuse, load_config, script_component
+from ..understanding.text_model import to_component
 from ..schemas import RiskComponents, TranscriptSegment
 from ..understanding import stt
 from .metrics import false_positive_rate, precision_recall_f1, roc_auc, roc_curve, wer
 
 log = logging.getLogger(__name__)
+ROOT_DIR = Path(__file__).resolve().parents[3]
 LIBRARY_VOICE, LIBRARY_RATE = "en-IN-NeerjaNeural", "normal"
 AUGS = ["none", "tel", "gsm", "snr20", "snr10", "snr5", "spd95", "spd105"]
 QUICK_AUGS = ["none", "tel", "gsm", "snr10"]
@@ -44,13 +46,18 @@ SPLIT = {
 
 
 # ---------------------------------------------------------------- data
+EXTRA_SPLITS = {"holdout": DATA_DIR / "holdout",                     # hand-written paraphrases (seen diagnosis: second look only)
+                "dev2": DATA_DIR / "corpus_audio" / "dev2",          # generated corpus dev: calibrates the text model range
+                "test2": DATA_DIR / "corpus_audio" / "test2"}        # generated corpus test: LOCKED, run once
+
+
 def load_clips(split: str, quick: bool) -> list[dict]:
     """Manifest rows of the split: its scripts, read by its voices or by the library voice.
     `holdout` = data/holdout (paraphrased + new scripts, voices unseen anywhere else)."""
-    if split == "holdout":
-        base = DATA_DIR / "holdout"
+    if split in EXTRA_SPLITS:
+        base = EXTRA_SPLITS[split]
         out = []
-        for r in csv.DictReader(open(base / "manifest_holdout.csv", encoding="utf-8")):
+        for r in csv.DictReader(open(base / ("manifest_holdout.csv" if split == "holdout" else "manifest.csv"), encoding="utf-8")):
             if quick and r["augmentation"] not in QUICK_AUGS:
                 continue
             r = dict(r)
@@ -119,6 +126,8 @@ def run_pipeline(clips: list[dict], models: Models, scripts: dict) -> list[dict]
             "sim": sm0.similarity if sm0 else 0.0, "sim_script": sm0.script_id if sm0 else "",
             "sim_type": sm0.scam_type if sm0 else "",
             "redflags": res.final.components.redflags,
+            "text_dec": (float(models.text_model.decision([" ".join(t.text for t in res.transcript)])[0])
+                         if getattr(models, "text_model", None) is not None and res.transcript else -10.0),
             "flag_cats": sorted({f.category for f in res.red_flags if not f.negated}),
             "n_negated": sum(f.negated for f in res.red_flags),
             "safe_context": any("safe-context" in r for r in res.final.top_reasons),
@@ -160,13 +169,31 @@ def calibrate(recs: list[dict]) -> dict:
     return cfg
 
 
+def calibrate_text(recs: list[dict], cfg: dict) -> dict:
+    """Calibrate ONLY the learned text component on the corpus dev split (dev2, through TTS and Whisper):
+    lo = 95th percentile of legit decision values (legit mostly maps to 0), hi = 25th percentile of scam
+    decision values (at least lo + 1). Everything else in the config (fingerprint threshold, weights) is kept."""
+    legit = np.array([r["text_dec"] for r in recs if r["label"] == "legit"])
+    scam = np.array([r["text_dec"] for r in recs if r["label"] == "scam"])
+    lo = round(float(np.percentile(legit, 95)), 3)
+    hi = round(max(lo + 1.0, float(np.percentile(scam, 25))), 3)
+    cfg = dict(cfg)
+    cfg["text_range"] = [lo, hi]
+    cfg["text_calibration"] = {"split": "dev2 (generated corpus dev, TTS -> Whisper)", "n_legit": int(legit.size), "n_scam": int(scam.size),
+                               "rule": "lo = p95 of legit decision values; hi = max(lo + 1, p25 of scam decision values)",
+                               "legit_p95": lo, "scam_p25": float(np.percentile(scam, 25)), "scam_median": float(np.median(scam)),
+                               "legit_median": float(np.median(legit))}
+    return cfg
+
+
 def fused(r: dict, cfg: dict, use: set[str] | None = None) -> tuple[float, str]:
     """Recompute fusion for a record with config `cfg`, optionally keeping only some layers (ablation)."""
     use = use or {"fingerprint", "script", "redflags", "voice"}
     thr = cfg["fp_threshold"]
     hit = r["fp_aligned"] >= thr and "fingerprint" in use
     comps = RiskComponents(fingerprint=r["fp_aligned"] / (r["fp_aligned"] + thr) if hit else 0.0,
-                           script=script_component(r["sim"], cfg) if "script" in use else 0.0,
+                           script=((to_component(r["text_dec"], tuple(cfg["text_range"])) if cfg.get("text_range")
+                                    else script_component(r["sim"], cfg)) if "script" in use else 0.0),
                            redflags=r["redflags"] if "redflags" in use else 0.0, voice=0.0)
     st = fuse(comps, hit, safe_context=r["safe_context"] and "redflags" in use, cfg=cfg)
     return st.score, st.level
@@ -200,10 +227,12 @@ def evaluate(recs: list[dict], cfg: dict, split: str, out: Path) -> dict:
     fp_ms = [r["timings"]["fingerprint_match"] + r["timings"]["peaks_hashes"] + r["timings"]["stft"] for r in recs]
     # ---- Layer 2
     sims, flags = np.array([r["sim"] for r in recs]), np.array([r["redflags"] for r in recs])
+    tdec = np.array([r["text_dec"] for r in recs])
     by_lang = {}
     for lang in sorted({r["lang"] for r in recs}):
         m = np.array([r["lang"] == lang for r in recs])
         by_lang[lang] = {"n": int(m.sum()), "auc_script_sim": round(roc_auc(y[m], sims[m]), 3),
+                         "auc_text_model": round(roc_auc(y[m], tdec[m]), 3),
                          "auc_redflags": round(roc_auc(y[m], flags[m]), 3)}
     wers = defaultdict(list)
     for r in recs:
@@ -247,7 +276,7 @@ def evaluate(recs: list[dict], cfg: dict, split: str, out: Path) -> dict:
     _csv(out / f"clips_{split}.csv", [{k: v for k, v in r.items() if k not in ("timings", "transcript", "flag_cats")} |
                                       {"fused_score": round(float(s), 1), "level": lv}
                                       for r, s, lv in zip(recs, full_scores, full_levels)])
-    _plots(out, split, l1_rows, y, sims, flags, full_scores)
+    _plots(out, split, l1_rows, y, tdec if (tdec > -9).any() else sims, flags, full_scores)
     return {
         "split": split, "n_clips": len(recs), "n_scam": int(y.sum()), "n_legit": int((~y).sum()),
         "scripts": SPLIT[split]["scripts"] if split in SPLIT else sorted({r["script_id"] for r in recs}),
@@ -262,7 +291,12 @@ def evaluate(recs: list[dict], cfg: dict, split: str, out: Path) -> dict:
                    "near_copy_definition": "same scam script, library voice at the other speaking rate (+augmentations)",
                    "auc_aligned_hashes": round(l1_auc, 3) if l1_auc is not None else None, "query_ms_p50": pct(fp_ms, 50), "query_ms_p95": pct(fp_ms, 95),
                    "index_hashes": None},
-        "layer2": {"note": ("HOLDOUT: scam scripts are newly written paraphrases (different wording and details) of the six "
+        "layer2": {"note": ("DEV2 (generated corpus dev, through TTS and Whisper): used to calibrate the text model's range, so optimistic."
+                            if split == "dev2" else
+                            "TEST2 (locked generated corpus test, written by a different model with a different prompt than the training data, "
+                            "read by unseen voices): run once with settings frozen on dev2. No script in it was used for training or calibration."
+                            if split == "test2" else
+                            "HOLDOUT: scam scripts are newly written paraphrases (different wording and details) of the six "
                             "scam types, legit scripts are new and include genuine calls that mention OTP/KYC/police/accident, "
                             "read by voices unseen anywhere else. Thresholds are the dev-calibrated ones, unchanged. "
                             "Author note: the scripts were written by the same assistant that wrote the red-flag lexicon, so "
@@ -270,6 +304,7 @@ def evaluate(recs: list[dict], cfg: dict, split: str, out: Path) -> dict:
                             "Scripts here are the library scripts read by other voices: a SANITY result, not the honest "
                             "holdout/human test (docs/06)."),
                    "auc_script_sim": round(roc_auc(y, sims), 3), "auc_redflags": round(roc_auc(y, flags), 3),
+                   "auc_text_model": round(roc_auc(y, tdec), 3),
                    "by_language": by_lang, "scam_type_top1_accuracy": round(float(np.mean(type_ok)), 3),
                    "wer_en_by_aug": {k: round(float(np.mean(v)), 3) for k, v in sorted(wers.items())}},
         "fusion": {"flag_rule": "level in {high, scam}", "tp": tp, "fp": fpn, "tn": tn, "fn": fn,
@@ -368,7 +403,7 @@ def _plots(out: Path, split: str, l1_rows, y, sims, flags, fused_scores) -> None
     ax.set_ylim(0, 1.1); ax.set_ylabel("recall@1"); ax.set_title(f"Layer 1 fingerprint recall by augmentation ({split})")
     fig.tight_layout(); fig.savefig(out / f"recall_by_aug_{split}.png", dpi=120); plt.close(fig)
     fig, ax = plt.subplots(figsize=(4.5, 4.5))
-    for name, s in [("script similarity", sims), ("red flags", flags), ("fused score", fused_scores)]:
+    for name, s in [("script / text model", sims), ("red flags", flags), ("fused score", fused_scores)]:
         fpr, tpr, _ = roc_curve(y, s)
         ax.plot(fpr, tpr, label=f"{name} (AUC {roc_auc(y, s):.2f})")
     ax.plot([0, 1], [0, 1], "k:", lw=0.8); ax.set_xlabel("false positive rate"); ax.set_ylabel("true positive rate")
@@ -386,7 +421,8 @@ def _git_commit() -> str | None:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--split", choices=["dev", "test", "holdout"], default="dev")
+    ap.add_argument("--split", choices=["dev", "test", "holdout", "dev2", "test2"], default="dev")
+    ap.add_argument("--calibrate-text", action="store_true", help="(dev2 only) fit the text-model range and write it to fusion_config.json")
     ap.add_argument("--quick", action="store_true", help="only clean/tel/gsm/snr10 versions")
     ap.add_argument("--no-live", action="store_true", help="skip the simulated-live latency evaluation")
     args = ap.parse_args()
@@ -395,6 +431,8 @@ def main() -> None:
     scripts = {s["id"]: s for s in json.load(open(DATA_DIR / "scripts.json", encoding="utf-8"))}
     if args.split == "holdout":
         scripts = {s["id"]: s for s in json.load(open(DATA_DIR / "holdout" / "scripts_holdout.json", encoding="utf-8"))}
+    elif args.split in ("dev2", "test2"):
+        scripts = {s["id"]: s for s in json.load(open(EXTRA_SPLITS[args.split] / "scripts.json", encoding="utf-8"))}
     models = Models().load()
     clips = load_clips(args.split, args.quick)
     print(f"{args.split}: {len(clips)} clips")
@@ -403,10 +441,21 @@ def main() -> None:
         cfg = calibrate(recs)
         FUSION_CONFIG_PATH.write_text(json.dumps(cfg, indent=1), encoding="utf-8")
         print("wrote", FUSION_CONFIG_PATH, "| fp_threshold", cfg["fp_threshold"], "| script range", cfg["script_sim_range"])
+    elif args.split == "dev2" and args.calibrate_text:
+        cfg = calibrate_text(recs, load_config())
+        FUSION_CONFIG_PATH.write_text(json.dumps(cfg, indent=1), encoding="utf-8")
+        print("wrote", FUSION_CONFIG_PATH, "| text_range", cfg["text_range"])
     else:
         cfg = load_config()
         if "fp_threshold" not in cfg:
             raise SystemExit("Run the dev split first: test/holdout must use dev-calibrated settings.")
+        if args.split in ("dev2", "test2", "holdout") and not cfg.get("text_range") and getattr(models, "text_model", None) is not None:
+            raise SystemExit("Calibrate the text model first: run_eval --split dev2 --calibrate-text")
+        if args.split == "test2":
+            import hashlib
+            h = hashlib.sha256((ROOT_DIR / "scripts" / "corpus" / "test2.json").read_bytes()).hexdigest()
+            if h != (ROOT_DIR / "scripts" / "corpus" / "test2.sha256").read_text().strip():
+                raise SystemExit("test2.json changed since its hash was recorded: refusing to run.")
     res = evaluate(recs, cfg, args.split, RESULTS_DIR)
     res["layer1"]["index_hashes"] = len(models.index) if models.index else None
     if not args.no_live:

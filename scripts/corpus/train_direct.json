@@ -1,0 +1,1370 @@
+[
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "This is Senior Inspector Sharma speaking from the cyber cell of the Mumbai Police department. We have intercepted an illegal parcel sent via FedEx using your Aadhaar number which contains banned narcotics and multiple fake passports. You are currently facing serious charges under the anti-terrorism act and imminent digital arrest. Do not disconnect this video call, do not tell anyone about this, and immediately transfer all your funds to the RBI verification account right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_000"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Greetings, I am calling from the Customs and Narcotics Bureau at Delhi International Airport. Your PAN card and registered mobile number are directly linked to a major money laundering syndicate operating out of Thailand. An international arrest warrant has been issued against you, but it can be stayed if you cooperate with our verification procedure. You must remain on this video line, keep this matter strictly confidential, and send the money to the secure government escrow account immediately.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_001"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Please remain calm and listen to my instructions very carefully as this is a matter of national security. I am DCP Vikram Rathore speaking from the Central Bureau of Investigation headquarters. Your bank accounts have been flagged for receiving proceeds from a massive extortion racket, and your PAN card will be permanently blocked today. You are under virtual surveillance, so stay on this call without alerting anyone, and provide your net banking PIN and OTP to secure your clearance.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_002"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Attention please, this is an urgent notification from the Cyber Crime Investigation Wing. A cellular connection registered under your Aadhaar in Kolkata has been used to send threatening messages and make extortion calls. To prove your innocence before the supreme court issues a non-bailable warrant, you need to undergo immediate remote verification. Stay on this secure line, do not inform your family or friends, and transfer your savings via UPI to the safe reserve account.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_003"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Good day, I am Inspector General Verma of the Narcotics Control Bureau. We have busted a drug trafficking ring and found a bank account opened using your forged documents containing fifty lakhs rupees. You are liable for immediate arrest and asset seizure unless you clear your name through our digital custody protocol. Do not disconnect this call under any circumstances, keep this completely secret, and send the money to the government audit account right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_004"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Namaste, I am speaking from the Enforcement Directorate regarding an ongoing FEMA violation investigation. Your primary savings account has received unauthorized foreign remittances linked to hawala operators, making you an accessory to financial terrorism. We are placing you under digital arrest starting this second to prevent evidence tampering. Do not tell anyone, stay on this video link, and transfer your funds to the specified verification account immediately.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_005"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "This is a high-priority call from the Cyber Crime Cell in Bangalore. Your Aadhaar details were used this morning to set up fraudulent corporate accounts used for laundering terror funds. An arrest warrant is pending your name unless you execute an immediate financial verification procedure with us. Stay connected on this video call, do not speak to anyone around you, and share your net banking CVV and OTP to clear your name.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_006"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "I am Assistant Commissioner of Police Manoj Kumar speaking from the special crime branch. We have tracked a suspicious international courier addressed to your home containing illegal synthetic drugs and foreign currency. You are facing immediate imprisonment and freezing of all your assets unless you cooperate with our live video interrogation. Do not disconnect, do not tell a single soul, and transfer your entire balance to the safe custody account right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_007"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Greetings, I am investigating officer Rajesh Sharma from the Central Economic Intelligence Bureau. Your PAN card details have been misused to siphon off crores of rupees from public sector banks into shell companies. You are under formal digital arrest and monitored continuously by our department. Stay on this call, do not inform your relatives, and send the money to the reserve bank verification portal immediately to avoid being handcuffed.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_008"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Please listen carefully and do not panic while I brief you on your current legal standing. I am Inspector Suresh Patil from the cyber crime division. Your mobile number and bank accounts are flagged in a multi-state cyber fraud case involving millions of rupees. You must submit to our digital custody protocol right now by staying on this video call, keeping absolute secrecy, and transferring your funds to the government safe account.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_009"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Namaste, I am Inspector Sharma from the Cyber Crime Cell in Mumbai, and your Aadhaar number has been used to open a rogue bank account involved in a money laundering racket of forty-seven lakh rupees. We are issuing an immediate digital arrest warrant against you, so you must stay on this video call right now and not disconnect under any circumstances. For your own safety and verification, you must not tell anyone about this investigation, not even your spouse or family members. To clear your name, you need to immediately transfer all your liquid funds to the RBI safe custody account that I am sharing with you via UPI.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_010"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Hello, this is officer Vikram Singh calling from the narcotics control bureau headquarters in Delhi regarding an international parcel intercepted at customs containing illegal drugs and fake passports in your name. You are facing grave charges under the anti-terror act, which means your bank accounts will be blocked immediately if you do not cooperate with our ongoing virtual interrogation. Stay locked in your room on this live video stream and do not tell anyone, because disclosing this official proceeding will lead to immediate police arrival at your doorstep. You must share your net banking PIN and the OTP received on your registered mobile number right now to verify that your personal funds are not tainted drug money.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_011"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Good afternoon, I am ACP Rajesh Verma speaking from the CBI headquarters, and we have traced five suspicious mobile numbers and two bank accounts linked to your PAN card that were used for extortion and hawala transactions. A non-bailable arrest warrant has already been dispatched to your local police station, but we can hold it if you comply with our digital investigation procedure immediately. You are strictly forbidden from leaving this video call or telling anyone about this confidential operation, or you will face immediate arrest within the hour. Please share your current account balances and transfer the savings to our government verification account using your UPI app right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_012"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Dear citizen, I am customs officer Malhotra speaking from the Mumbai international airport cargo terminal, where we have seized a suspicious courier addressed to you containing five expired passports, banned laptops, and three lakh rupees in unaccounted cash. This is a severe national security breach, and you are now under digital arrest, meaning you cannot leave your chair or disconnect this video link until further notice. Do not tell anyone about this raid or your family will also be implicated in this cyber terrorism and drug syndicate case. You must immediately download the secure verification app I am sending and transfer your money to the RBI safe account to prove your innocence.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_013"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Hello, this is Inspector Anil Kumar from the Delhi cyber crime branch, and your name has surfaced in a high-profile human trafficking and money laundering syndicate operating out of Kolkata. Your Aadhaar and PAN details have been used to route over two crore rupees through fraudulent bank accounts, and an arrest order is pending against you. You must remain on this video call continuously for the next three hours and under no circumstances should you tell anyone, including your parents or colleagues. Kindly share your debit card details, CVV, and the OTP sent to your phone right now so our forensic team can audit your funds and clear your name.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_014"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Namaste, I am senior officer Suresh Rao calling from the Enforcement Directorate office, and we are monitoring your bank accounts because they are directly linked to a massive corruption scandal involving shell companies. You are placed under virtual arrest right now, which means you cannot speak to anyone, open your front door, or tell anyone about this call under penalty of law. Disconnecting this line or informing family members will result in immediate police dispatch and your formal arrest without bail. You must transfer your entire bank balance to the government audit reserve account through UPI immediately to clear your name from the charges.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_015"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Good day, I am Inspector General Verma from the central narcotics bureau, and we have intercepted a courier sent in your name to Taiwan containing twenty fake credit cards and MDMA drugs worth fifty lakhs. An immediate digital arrest has been ordered against you by the high court, and you must follow every instruction I give on this video link without question. Do not tell anyone about this confidential police action, as it will compromise our raid on the main conspirators and lead to your immediate imprisonment. To verify your assets, you must open your banking app and transfer all your funds to the designated safe custody account right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_016"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Hello, I am investigating officer Ramesh Gupta from the Mumbai cyber cell, and your mobile number is actively being used to run a extortion racket threatening high-profile businessmen. A formal digital arrest has been initiated against you, and you are required to keep your camera on and stay on this call until we complete our verification. You must not tell anyone about this ongoing investigation, because information leakage will force us to send a team to arrest you immediately. Please provide your net banking login credentials, PIN, and the OTP to transfer your savings to the court holding account for security clearance.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_017"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Namaste, this is Deputy Commissioner of Police Alok Nath speaking, and your Aadhaar identity has been heavily compromised and misused for terror funding and illegal foreign exchange transactions. We are placing you under digital house arrest right now, and you are strictly ordered not to hang up this video call or tell anyone about these proceedings. If you inform anyone, you will be booked under non-bailable sections of the Unlawful Activities Prevention Act and arrested immediately. Send the money from all your fixed deposits and savings accounts to the government verification UPI ID provided in the chat box right now to prove you are not involved.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_018"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "Hello, I am officer Sanjay Patel from the customs department at the Delhi airport, where a cargo container registered under your PAN details has been flagged for carrying illegal firearms and smuggled gold. You are now legally under digital arrest, and you must maintain strict silence while remaining on this video call with me for the entire verification process. Do not tell anyone, not even your spouse or children, about this sensitive case or you will face immediate physical arrest and imprisonment. Transfer your funds to the official reserve bank clearance account using your net banking portal right now to protect your assets from being seized.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_en_019"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Hello sir, I am calling from the main branch regarding your urgent Aadhaar and PAN card KYC update for your savings account. If you do not complete this verification right now today, your account will be blocked and all UPI services will be stopped immediately. Please quickly tell me the six-digit OTP that has just been sent to your registered mobile number so I can update it from my system.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_020"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Good morning Madam, this is calling from the credit card division to inform you that your reward points worth ten thousand rupees are expiring today. To transfer this cashback directly to your bank account, I just need you to verify your card details including the expiry date and the CVV number on the back. Do not worry, this is a completely safe and official process, just read the numbers out to me.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_021"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Sir namaste, I am calling from the security department because we noticed suspicious international transactions of fifty thousand rupees happening from your debit card. If you did not make this transaction, you must cancel it immediately by confirming your four-digit ATM PIN and the OTP you received just now. Do not disconnect the call or tell anyone else, otherwise your money will be lost forever.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_022"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Hello, I am calling regarding your recent telecom SIM card verification which is showing as pending in the central database. Your mobile number will be suspended within the next two hours if you do not link your Aadhaar number right now. Please open your net banking app and share the OTP shown on your screen to complete the police-mandated verification process immediately.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_023"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Dear customer, your bank account has been flagged by the cyber crime cell due to illegal activities linked with your PAN card details. To avoid legal action and immediate arrest, you need to transfer your savings to a secure government reserve account using UPI right now. Stay on the line with me, do not hang up, and tell me the OTP to finish the transfer process.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_024"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Hello sir, I am speaking from the wallet customer care department about the KYC block placed on your digital wallet. Your account will be blocked today unless you verify your identity by sharing the secret OTP sent to your phone. Hurry up and read the code to me so I can remove the restriction and restore your full transaction limits.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_025"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Good afternoon, I am calling from your credit card reward redemption desk to help you claim your pending shopping vouchers worth five thousand rupees. Just confirm your sixteen-digit card number and the three-digit CVV printed at the back so we can credit the amount. Please note this offer is valid for the next two minutes only, so do it right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_026"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Sir, your bank's head office has sent an urgent alert stating that your debit card is about to be blocked permanently due to security upgrade rules. To prevent this, you simply need to read out the OTP received on your mobile phone to verify your identity. Do not tell anyone else this code as per bank guidelines, just give it to me directly.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_027"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Hello, this is an urgent automated security call from your bank informing you that an unauthorized loan has been applied using your credentials. To cancel this loan and save your account from being frozen, you must immediately share your net banking login password and the confirmation OTP. Stay on the line and read the numbers out loud so I can process the cancellation right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_028"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Namaste sir, I am calling from the central KYC verification bureau because your Aadhaar details are missing from your bank records. Your account is restricted and you cannot receive any salary or money transfers until you update it. Please tell me the OTP received on your Aadhaar-linked mobile number to lift the block immediately.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_029"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Hello sir, I am calling from the main branch regarding your urgent Aadhaar and PAN KYC update which is currently pending on our server. If you do not complete this verification right now, your netbanking and debit card will be blocked immediately. Please confirm your registered mobile number and tell me the six-digit OTP that has just been sent to your phone.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_030"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Good morning madam, this is an automated security alert desk calling from the credit card division about your recent transaction of forty five thousand rupees. Since this looks like a fraudulent charge, we need to cancel it immediately to save your funds. Kindly read out the three-digit CVV number on the back of your card and the OTP received on your SMS to verify your identity.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_031"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Namaste sir, I am speaking from the head office fraud prevention department because your bank account is showing some unusual activity and risk of suspension. To secure your balance and prevent police action, you must transfer your savings to our safe-holding account via UPI right now. Do not tell anyone about this call, and send the money immediately.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_032"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Hello ma'am, I am your relationship manager from the credit card support team and I am calling to help you redeem your pending reward points worth ten thousand rupees. You just need to share your card number, expiry date, and the quick verification OTP to credit this amount to your wallet. Please do this quickly before the offer expires today.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_033"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Dear customer, this is an urgent notification from your telecom service provider regarding your mobile SIM card blocking due to incomplete KYC verification. Your services will be permanently disconnected within the next two hours if you fail to update your details. Please download our quick support application and enter your UPI PIN to complete the verification.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_034"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Hello sir, good afternoon, I am calling from the central debit card department to inform you that your ATM card has expired in our database. To unblock your card and resume normal cash withdrawals, I need you to confirm your sixteen-digit card number and the secure OTP sent to your phone right now. Do not disconnect the call otherwise your card will remain blocked.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_035"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Good day madam, I am reaching out from the digital wallet security cell as your account KYC status is showing as red and non-compliant. We need to validate your identity immediately to avoid legal penalties and account freezing by the Reserve Bank. Please read out the OTP that just arrived on your screen to finish the process.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_036"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Hello sir, urgent update from the bank fraud desk, someone is trying to withdraw fifty thousand rupees from your account using a fake card. We can stop this unauthorized transaction right away if you help us verify your credentials. Just tell me your secret PIN and the secure OTP code to reverse the charges instantly.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_037"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Namaste ma'am, I am calling from the credit card activation center to help you waive off the annual maintenance charges on your account. To process this permanent waiver, we just require a standard security check of your card details and the verification code. Kindly share the CVV and OTP right now so I can update your file.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_038"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Hello sir, this is a final reminder from the customer verification bureau that your bank account is restricted due to pending PAN card linking. Your account will be blocked today if you do not clear this compliance check immediately. Please send the verification OTP to my number right now to restore full access.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_en_039"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Namaskar, I am calling from the Reserve Bank of India lottery department regarding your mobile number which has won the mega cash prize of twenty-five lakh rupees in our national lucky draw. To release this tax-free amount directly into your bank account, you need to verify your details and immediately pay a refundable processing fee of four thousand nine hundred ninety-nine rupees through UPI right now. Please note that you must not tell anyone about this secret procedure, otherwise your winning claim will be cancelled and your account will be blocked.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_040"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Good morning sir, this is Inspector Sharma from the Cyber Crime Cell and Telecom Authority reporting that your Aadhaar number is linked to a fraudulent lottery racket involving a luxury car and cash rewards. To clear your name and prevent an official police arrest warrant, you need to transfer fifty thousand rupees as a security deposit to our verification account immediately. Do not hang up the phone or disconnect the call, and keep your UPI PIN ready to complete this clearance right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_041"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Congratulations, madam, your SIM card has been selected by the Jio Lucky Draw Department for a bumper prize of ten lakh rupees and a brand new sedan car. Before our courier service can dispatch the official winning documents and car keys to your home address, you must clear the mandatory GST and insurance charges amounting to six thousand five hundred rupees. Send the money instantly via Google Pay or PhonePe to our authorized agent UPI ID, and share the screenshot with the OTP so we can process your claim.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_042"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Attention please, I am calling from the Ministry of Finance and Central Lottery Board to inform you that your registered name has won the second prize in our annual financial relief draw worth fifteen lakh rupees. Since this is a government-subsidized scheme, you are required to deposit an advance custom clearance fee of eight thousand rupees into the designated treasury account. Hurry up and complete the UPI transfer right now, because if you delay, the funds will be transferred to another claimant and your PAN card details will be flagged.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_043"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Hello sir, I am speaking from the Amazon India festival lucky draw headquarters to confirm that you have won a shopping voucher worth fifty thousand rupees and a smart LED television. To claim these gifts without any shipping delay, you just need to purchase five thousand rupees worth of Google Play gift cards from your nearest store and read out the secret code to me. Do not tell anyone about these gift card numbers because it is strictly confidential, and you must complete this task within ten minutes or the offer expires.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_044"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Respected sir, this is Rajesh Kumar calling from the State Bank of India main branch manager office to announce that your account has been randomly chosen for the annual loyalty cash reward of twelve lakh fifty thousand rupees. As per banking compliance rules, before we credit this winning amount, you need to verify your debit card CVV and the incoming OTP to activate the special transfer gateway. If you fail to follow these instructions immediately, the reward will lapse and your existing savings account will be blocked for security reasons.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_045"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Greetings from the Indian Railways and IRCTC lucky draw committee, we are delighted to inform you that your train ticket booking number has won a bumper cash prize of twenty lakh rupees. To receive this amount through direct bank transfer, you first need to pay the clearance tax of five percent through our official merchant UPI handle right now. Send the money immediately and confirm by sharing the transaction reference number, otherwise legal action and arrest will follow for tax evasion.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_046"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Dear customer, I am calling from the Flipkart Mega Carnival helpdesk to officially notify you that your profile has won an international trip package and a cash prize of eight lakh rupees. Our courier partner requires an advance customs and handling charge of four thousand two hundred rupees before they can hand over the winning hamper at your doorstep. Please transfer this amount using any UPI app on your mobile right now, and make sure you do not disconnect the call or tell family members about this surprise gift.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_047"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Namaste madam, this is calling from the Income Tax Department and National Lottery Bureau regarding your unclaimed lucky draw prize of thirty lakh rupees accumulated over the past year. We have prepared the demand draft in your name, but to release it officially, you must clear the pending clearance charges of eleven thousand rupees via our secure government UPI gateway. Transfer the money immediately and keep your bank account details and PIN ready for final verification, failing which you will face immediate arrest.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_048"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Hello sir, I am the senior manager from the Council of Scientific and Industrial Research lucky draw division informing you that your name has been drawn for a scientific grant and cash award of eighteen lakh rupees. To process this tax-free reward, a mandatory file registration fee of seven thousand five hundred rupees must be deposited into our audit account right now. Send the money via UPI transfer immediately, and remember that as per official guidelines, you must not discuss this matter with anyone to maintain strict confidentiality.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_049"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Sir, congratulations, your mobile number has been selected in the mega Jio lucky draw for a cash prize of 25 lakh rupees. To claim this amount immediately, you have to verify your identity by sending a small processing fee through UPI right now. Do not tell anyone about this call, otherwise your prize money will be cancelled.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_050"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Hello madam, I am calling from the Reserve Bank lottery department regarding your pending government refund of 50,000 rupees. You need to share your Aadhaar number and OTP right now so I can process the direct bank transfer. If you delay this, your account will be blocked immediately.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_051"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Listen to me carefully, you have won a brand new Hyundai car in our annual festival lucky draw. To get the vehicle delivered to your home, you must first pay the GST and insurance charges of 12,500 rupees via Google Pay or PhonePe. Send the money immediately or the car goes to someone else.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_052"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Sir, your name came out first in the Amazon Diwali shopping lucky draw and you have won a gold necklace worth 1.5 lakh rupees. The delivery boy is standing outside with the gift, but you have to pay the customs clearance tax of 4,000 rupees in advance using UPI. Do it right now, no time to waste.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_053"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Good morning sir, this is the manager from Flipkart prize department informing you about your 10 lakh rupees cash reward. You have to clear the file charges by purchasing an Amazon gift card worth 5,000 rupees and sharing the code with me. If you do not transfer the fee today, police action and arrest warrant will be issued against you.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_054"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Madam, your phone number has won the SBI credit card reward of 75,000 rupees in our weekly lucky draw. To transfer the money to your bank account, I need your 16-digit debit card number, expiry date, and CVV. Read it out clearly right now or the transaction will fail.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_055"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Sir, congratulations, you are the lucky winner of our international lottery of 50,000 US dollars converted into rupees. You must deposit the foreign exchange clearance fee of 8,500 rupees into our designated bank account immediately. Do not disconnect the phone or discuss this with your family members.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_056"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Hello sir, I am calling from the Ministry of Finance about your unclaimed government subsidy and lottery gift. To receive this money directly, you need to pay a registration fee of 3,200 rupees through any UPI app right now. Send the screenshot immediately or your PAN card details will be blocked.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_057"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Listen, your landline number has won a free LED television and a cash prize of 2 lakh rupees in the BSNL bumper draw. You just have to pay the courier delivery charge of 1,500 rupees through UPI to our company executive. Transfer the funds right now or lose the gift permanently.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_058"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Sir, this is an urgent call from the income tax department regarding the tax clearance for your lucky draw prize money. You must pay 10 percent tax upfront by transferring money to our official UPI ID right now. If you fail to comply immediately, legal cases and arrest will follow.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_en_059"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hello Grandpa, it is me, Rohan, I am speaking from a very bad situation in Pune and my voice is sounding different because I met with a major accident on the highway. I need money immediately for the hospital deposit and urgent surgery charges, so please do not tell Mummy or Papa right now or they will panic. Transfer fifty thousand rupees to this UPI ID right now or the doctors will refuse to start the treatment.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_060"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Namaste uncle ji, I am Inspector Sharma calling from the cyber crime police station regarding your son Vikram, who has been caught in a serious molestation and extortion case at the airport. You need to settle the matter immediately by paying a fine through an urgent bank transfer to our official account or he will face immediate arrest and go to jail for seven years. Do not tell anyone about this call, not even your wife, to protect the family name and complete the verification using your Aadhaar number right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_061"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hi Dadi, it is your grandson Sahil, I am in big trouble with the local police in Delhi because of a street fight outside my college hostel. The inspector is asking for a cash settlement of one lakh rupees to drop the charges, otherwise they will lock me up in the police station tonight. Please send the money immediately through Google Pay and do not tell my parents because they will kill me if they find out.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_062"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hello sir, I am Dr. Verma calling from the emergency ward of City Hospital where your nephew Arjun has been brought after a severe motorcycle crash. His condition is critical and we need to purchase costly surgical plates immediately, but the hospital payment gateway is down. Please transfer twenty thousand rupees via UPI to this number right now and do not tell any other family members as we are focusing on saving his life.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_063"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Good morning Madam, this is sub-inspector Patil calling from the Mumbai central police station where your son's friend has been arrested with illegal substances and your son's PAN card was found in his pocket. To clear his name and prevent an immediate arrest warrant, you need to transfer a security deposit of seventy-five thousand rupees to the court account immediately. Please maintain strict confidentiality and do not tell anyone in the house about this legal matter.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_064"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hello beta, this is your buaji speaking, your cousin Manoj is stuck at the airport customs because he brought some gold gifts from Dubai and they are demanding a heavy duty fine. He is crying and asking for fifty thousand rupees to be transferred to this UPI address immediately to release his baggage. Keep this completely secret from your uncle for now, just send the money right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_065"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Namaste ji, I am lawyer Gupta representing your grandson's college authorities, and he has been caught in a severe ragging scandal that can ruin his entire career. We can hush up the matter with the dean right now if you pay a settlement fee of one lakh rupees through an instant bank transfer. Do not tell your son or daughter-in-law about this call, just complete the transaction immediately to save the boy's future.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_066"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hello sir, this is constable Mishra calling from the railway police station, your son was traveling without a valid ticket and got into a physical fight with the ticket collector. He is detained here and will face court charges unless you pay a fine of fifteen thousand rupees through UPI transfer immediately. Do not inform your relatives about this incident because it is a sensitive criminal matter.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_067"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hi Nani, it is me, your favorite granddaughter Ananya, I lost my handbag containing my phone, wallet, and cards in Bangalore and I am stranded at a petrol pump at midnight. I urgently need twenty thousand rupees for my cab fare and hotel stay, please send the money to this UPI ID right now. Do not call my parents because their phones are switched off and I do not want to scare them at this hour.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_068"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hello Madam, this is station house officer Singh calling from the cyber cell, your nephew's bank account has been linked to a major terror funding scam and he is currently in our custody. You must cooperate with our digital investigation by transferring a verification amount of one lakh rupees to our secure government account immediately. Do not tell your husband or anyone else, otherwise your nephew will be put behind bars right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_069"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hello Grandpa, this is Vikram speaking from an unknown number because my phone screen is completely broken after a terrible road accident here in Delhi. A man was badly injured, and the local police have detained me at the station, demanding twenty thousand rupees immediately via UPI to drop the charges. Please do not call my mother or anyone else in the family right now because they will panic, just transfer the money to this number right away.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_070"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Namaste Sir, I am Inspector Sharma speaking urgently from the Cyber Crime Cell regarding your grandson Rahul whose Aadhaar and PAN card numbers have been found linked to a major money laundering racket and illegal arrests. He is currently locked in our custody and facing a serious jail term unless you settle the verification fee of fifty thousand rupees immediately. Do not tell anyone about this call or share any OTP or PIN with outsiders, just complete the UPI transfer right now to save him.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_071"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hi Dad, it is me, your son Amit, calling from a hospital in Mumbai because I met with a horrific accident on the highway and urgently need cash for emergency surgery. The hospital authorities are refusing to start the treatment until I deposit fifty thousand rupees for medical bills through UPI right now. Please do not tell Mom about this because her blood pressure will shoot up, just send the money immediately and keep this confidential.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_072"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Good morning Madam, this is Dr. Verma calling from City Hospital where your nephew Sameer has just been rushed following a severe physical assault and head injury. We need an immediate deposit of forty thousand rupees for his emergency operation, and the payment must be made via UPI right away. Do not waste time calling other relatives to verify this, just transfer the funds immediately so we can save his life.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_073"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hello Aunty, it's me, your nephew Rohan, calling in a complete panic because my wallet and phone were stolen at the railway station and I am stranded without a single paisa. I got into a fight with an auto driver who called the police, and they are threatening to put me in lockup unless I pay a fine of fifteen thousand rupees right now. Please do not tell my parents about this mess, just send the money to this UPI ID immediately.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_074"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Attention please, this is Sub-Inspector Patil from the Central Police Station informing you that your son has been caught in a drunken driving brawl and is facing immediate arrest. To hush up the FIR and prevent his name from appearing in the media, you must transfer twenty-five thousand rupees to our official UPI handle right this second. Do not discuss this matter with anyone at home under any circumstances, or the consequences will be severe.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_075"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hi Grandma, it's your granddaughter Priya, and I am crying because I lost my purse containing my hostel keys and money while traveling in an auto in Bangalore. I need twenty thousand rupees urgently to pay my pending mess bill and clear a fine, otherwise the college authorities will suspend me today. Please do not tell Papa or anyone else about this mistake, just make a quick UPI transfer right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_076"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Namaste Sir, I am calling on behalf of your grandson Kunal who has been severely beaten up by local goons near his college and is currently bleeding in an alley. We need thirty thousand rupees for his emergency transport and first aid, which you must send via UPI immediately. Do not call his parents or anyone else to confirm, just send the money right now to save him from permanent damage.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_077"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hello Sir, this is Constable Ramesh speaking from the South Zone police station where your son has been detained for possession of prohibited items. An urgent settlement of fifty thousand rupees is required via UPI to close the case before higher officials get involved. Strictly do not tell your wife or any other family members about this arrest, just complete the transfer immediately.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_078"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Hi Uncle, it's me, your nephew Akash, calling in extreme distress because my car crashed into a delivery bike and the police are threatening to impound the vehicle and jail me. I need thirty thousand rupees transferred to this UPI number right now to settle with the victim and avoid a formal arrest. Please keep this strictly between us and do not tell my parents, just send the money immediately.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_en_079"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "This is an urgent call from India Post regarding your international parcel which is currently held at Mumbai customs due to unpaid duty charges of four hundred ninety-nine rupees. Please press one immediately to connect with our dispatch officer and clear the payment via UPI to avoid legal action. If you fail to do this right now, your delivery will be cancelled and your Aadhaar details will be flagged for investigation.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_080"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Attention customer, your scheduled delivery from Delhi logistics could not be completed because your address pin code is incorrect in our system. Kindly click the tracking link sent to your registered mobile number and update your correct details along with a token fee of fifty rupees. Do not share your OTP or PIN with anyone, but you must complete the transfer immediately to release your parcel today.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_081"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Hello sir, I am calling from the customs clearance department at the airport regarding a consignment registered in your name that contains illegal documents and restricted items. To prevent your bank account from being blocked and to stop local police from arresting you within the hour, you need to verify your PAN card details right now. Please remain on the line and follow my instructions carefully without telling anyone about this call.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_082"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Your urgent courier shipment from global express is pending delivery at our central warehouse because customs clearance fees of two hundred rupees are still unpaid. Send the money immediately using the UPI handle provided in your text message so our delivery agent can dispatch the box to your home today. If you delay this payment, the parcel will be sent back and your refund will take three months to process.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_083"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Good morning madam, this automated message is from the international logistics hub informing you that your parcel has been seized by authorities due to suspicious contents. Press nine on your keypad right now to speak with a senior customs officer who will help you clear the charges over the phone. Please keep your debit card ready to share the CVV and expiry date so we can verify your identity securely.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_084"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Urgent notice from DTDC courier service, your express delivery is stuck at the state border checkpost because local octroi tax has not been paid by the sender. You need to pay the remaining balance of one hundred fifty rupees right now through our quick payment gateway link to get the parcel released. Failure to do so will result in immediate cancellation of your order and no refund will be issued.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_085"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Dear customer, your Aadhaar-linked parcel sent via express cargo has been detained by the narcotics control cell because it triggered a security alert at the scanner. You must transfer five thousand rupees as a temporary security deposit to our secure government account immediately to prove your innocence. Do not disconnect the call or talk to your family, otherwise a non-bailable warrant will be issued against you.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_086"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "This is a final reminder from fast track logistics about your pending delivery which requires an address verification fee of twenty-five rupees to proceed. Click the SMS link right now and enter your net banking credentials or UPI PIN to complete the small transaction. Your package is waiting at the local hub and will only be loaded onto the delivery van after this confirmation.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_087"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Hello, I am calling from customs and excise department regarding a gift parcel sent from abroad which exceeds the permissible duty-free limit for personal items. To release the box without paying heavy penalty charges, you need to purchase an Amazon gift card worth two thousand rupees and share the code with me immediately. Act fast because the warehouse is closing in ten minutes and your items will be auctioned off.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_088"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Attention please, your consignment bearing tracking number IN-8892 has been intercepted by customs officials due to a mismatch in your declared PAN and mobile number. Press zero now to connect with the verification desk and read out the six-digit OTP you just received on your phone. If you do not cooperate immediately, your financial transactions will be frozen and legal proceedings will start.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_089"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Namaste Sir, this is calling from DTDC International Courier Department regarding your urgent parcel held at Mumbai customs due to unpaid clearance duty of four hundred ninety-nine rupees. To release the delivery to your Aadhaar address immediately, you must click the tracking link sent to your registered mobile number right now and pay using your UPI ID. If you fail to pay this small fee within the next ten minutes, your parcel will be sent back and legal action will be initiated against you.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_090"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Hello Madam, I am speaking from the main customs clearing house at Delhi airport about a high-value international package containing important documents that is currently stuck because of pending GST charges of six hundred fifty rupees. Please press one on your phone keypad right now to connect with our senior dispatch officer who will guide you to transfer the amount securely via Google Pay or PhonePe. Do not disconnect the call or tell anyone about this procedure, otherwise your delivery will be cancelled and your documents destroyed.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_091"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Attention please, this is an automated alert from India Post speed post services stating that your home delivery could not be completed yesterday because your contact number was marked incorrect in our system. You need to verify your PAN card details and pay a re-dispatch penalty of fifty rupees immediately by entering your debit card PIN and CVV on the voice prompt system. Your parcel is very important, so please follow these steps right now to avoid permanent return to the sender.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_092"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Arre Dadi ji, listen carefully to me because your grandson's gift box sent from London is stuck at the airport cargo office because the import tax of twelve hundred rupees has not been paid yet. I am very sympathetic to your situation, so just take your ATM card in your hand and tell me the sixteen-digit number and the OTP that comes on your phone so I can pay it for you. Do not worry about anything, just give me the OTP right now so the delivery boy can bring the parcel to your doorstep today.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_093"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Sir, urgent warning from the Blue Dart courier regional hub, your consignment containing confidential banking papers has been intercepted by customs officials because it contains illegal items and a fine of five thousand rupees is pending. To prove your innocence and clear the parcel, you have to transfer the money to our official UPI handle immediately and share the screenshot with us. If you delay this even by two minutes, police will come to your house for your arrest, so do not tell anyone and do this fast.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_094"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Hello Madam, good morning from FedEx express delivery service, we have been trying to deliver your international gift parcel since three days but customs department has put a hold on it due to missing clearance documents. You just need to pay a small holding fee of two hundred rupees through any UPI application right now by scanning the QR code we are sending to your WhatsApp. Please hurry up and complete the transfer so we can dispatch the delivery van to your colony today itself.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_095"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Suniyega Sir, hum Delhi customs se bol rahe hain, aapka ek parcel aaya hai foreign se jismein bahut saara cash aur electronic items hai aur us par customs duty baaki hai. Aapko turant paanch sau rupaye ka online payment karna padega tabhi yeh parcel release hoga nahi toh aapka bank account block kar diya jayega. Jaldi se apna UPI PIN daliye aur payment kariye, kisi ko bhi mat bataiyega yeh baat warna bahut bada problem ho jayega.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_096"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Respected Sir, this is an urgent notification from DTDC courier customer care regarding your pending delivery reference number eight four nine two which is currently held up at the central warehouse due to unpaid excise duty of three hundred rupees. Please click the blue link provided in the SMS right now and enter your net banking username and password to settle the payment securely. Act immediately before your parcel gets auctioned off by the customs department at the end of the day.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_097"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Hello beta, I am calling from the main postal office sorting division regarding a courier box addressed to your father that has been flagged by customs for lacking a valid tax stamp of nine hundred rupees. Please take out your credit card and read out the card number and CVV to me right now so I can clear the dues from our end and dispatch the parcel without further delay. This is very urgent, so please cooperate fully and do not disconnect the line or consult anyone else.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_098"
+ },
+ {
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Emergency alert from Professional Couriers head office, your express parcel is detained at the port authority because of an address mismatch and a penalty of one hundred fifty rupees is applicable for correction. Press star key on your mobile dialer right now to speak with our verification desk agent who will ask for your UPI PIN to process the refund and release the parcel. Failure to complete this verification immediately will result in forfeiture of the items and cancellation of your customer profile.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_fake_courier_en_099"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Hello sir, I am calling from the Microsoft Windows central security department in Mumbai. Your desktop IP address has been flagged for illegal child pornography downloads and cyber crime activities right now. If you do not connect to AnyDesk immediately and clear your Aadhaar verification, local police will come and arrest you.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_100"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Namaste uncle, I am speaking from State Bank of India main fraud prevention branch. Your bank account is compromised because someone has used your PAN card to make illegal money transfers in Delhi. You must open your net banking right now and share your OTP and UPI PIN with me to save your life savings.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_101"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Good morning sir, this is Rajesh calling from the Norton Antivirus national head office. Your computer has a dangerous virus that is automatically sending all your personal data and bank details to hackers in China. Please switch on your laptop immediately and download TeamViewer so I can clean your hard drive.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_102"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Sir listen to me carefully, I am Inspector Sharma from the Cyber Crime Cell in Delhi. Your internet router has been hacked and criminals are using your broadband connection for terrorist threats. Download the AnyDesk app on your phone right now and do not tell anyone about this call or your family will be in big trouble.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_103"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Hello beta, I am calling from your internet service provider Airtel broadband division. Your Wi-Fi network is showing high-risk red alert signals and your router will be permanently blocked in five minutes. Quickly go to the Google Play Store and install QuickSupport remote application so I can fix your IP address.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_104"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Attention sir, this is a very urgent call from the Reserve Bank of India cyber security division. Your 2.5 lakh rupees in your savings account are currently in danger because of a major security breach. Transfer all your funds to our safe government reserve account using UPI right now or lose everything forever.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_105"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Sir, I am calling from the Microsoft technical helpdesk regarding your Windows license expiry and malware infection. Your screen is being monitored by international hackers who are trying to steal your bank CVV numbers. Open your web browser immediately and type the address I am giving you to install our secure remote tool.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_106"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Namaste aunty, I am Rahul from the Amazon security department in Bangalore. Someone has used your credit card to purchase an iPhone worth 80,000 rupees using your account. To cancel this order and get your refund, you need to buy Google Play gift cards from the nearby shop and share the secret codes with me right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_107"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Hello sir, this is Vikram from the HDFC Bank fraud control unit. Your debit card has been cloned and unauthorized transactions are happening in Kolkata as we speak. Tell me your 4-digit PIN and the OTP you just received on your registered mobile number immediately, otherwise your entire account will be blocked for lifetime.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_108"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Sir, please listen without panicking, I am calling from the Department of Telecommunications. Your mobile number and Aadhaar card are linked to a major money laundering scam involving multiple bank accounts. You must stay on the line, open your mobile banking app, and transfer 50,000 rupees to the verification account right now to prove your innocence.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_109"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Hello sir, I am calling from the Microsoft Windows Security Department because your main IP address is showing multiple foreign login attempts and your computer has been fully compromised by hackers right now. Before your entire hard drive is wiped out and your Aadhaar linked bank accounts are frozen, you need to immediately turn on your laptop and download our secure remote access application so I can block these illegal transactions. Open your browser and type the quick support code I am giving you, but remember do not tell anyone about this or local police will file an immediate arrest warrant against your PAN card.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_110"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Good morning Madam, this is Rajesh Sharma calling from the National Cyber Crime Prevention Cell regarding a very critical security alert on your internet banking profile where someone has illegally transferred two and a half lakh rupees using your compromised UPI ID. To reverse this fraudulent charge and secure your funds immediately, we need to verify your identity by checking your live screen, so please go to the Play Store right now and install AnyDesk without cutting this call. Once you share the nine digit connection code with me, I will guide you to open your net banking app and enter your UPI PIN to stop the account from being permanently blocked.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_111"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Namaste sir, I am calling from your broadband service provider network security desk as our main server has detected dangerous malware entering your router through foreign IP addresses and accessing your personal documents. Your computer is currently broadcasting illegal data packets, which means cyber criminals are using your broadband connection for financial terrorism and your local police station has already been notified. You must immediately sit in front of your desktop, press the Windows key and the R key together, and type our technician support code to let us clean your system right now before you face a police raid.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_112"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Dear customer, this is an urgent automated alert from the SBI Central Fraud Control Unit, and I am senior security officer Vikram Malhotra speaking to you directly because your debit card and savings account have been flagged for money laundering activities. Someone in Kolkata has used your PAN card details to apply for instant loans and your account will be blocked within the next ten minutes unless you complete a mandatory video KYC verification right now. Open your net banking portal, keep your Aadhaar number and registered mobile phone nearby for the high security OTP, and do not disconnect this line or local authorities will take legal custody of you.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_113"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Hello sir, good afternoon, I am calling from the Norton Antivirus corporate escalation desk because your annual software license expired last month and your system has now been infected with a high risk Trojan horse virus that is stealing your banking passwords. All your saved browser credentials, UPI handles, and personal photos are currently being uploaded to a dark web server, and we need to take immediate remote control of your machine to quarantine the infected files. Please switch on your laptop right now, open your web browser, and go to our remote help website to download the secure connection tool so we can fix this before your money is stolen.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_114"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Madam, please listen to me very carefully because this is a high priority call from the Reserve Bank of India cyber monitoring division regarding an unauthorized loan taken in your name using your leaked Aadhaar details. The cyber cell has traced this illegal activity back to your primary bank account, and to prove your innocence and prevent your funds from being seized, you must transfer your remaining balance to a safe government holding account immediately. Open your mobile banking app right now, enter the official beneficiary UPI ID I am dictating to you, and send the money before your account is frozen forever.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_115"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Hello sir, I am Amit Verma from the Microsoft Technical Assistance Center, and we have received a red alert signal from your Windows operating system indicating that your firewall has been completely disabled by international hackers. If you do not fix this critical security vulnerability immediately, your entire hard drive will be encrypted and all your personal files, photos, and net banking passwords will be permanently deleted within the next hour. Grab your mobile phone, open the App Store right now, search for the QuickSupport remote desktop application, and install it so I can securely log into your computer and clear out these malicious trojans.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_116"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Good day Madam, I am calling from the HDFC Bank Central Fraud Prevention Department because our automated systems have detected suspicious activity on your credit card involving a large international purchase of fifty thousand rupees. If you did not authorize this transaction, we need to cancel it immediately by verifying your card details, including the expiry date and the three digit CVV number on the back of your card. Stay on the line, open your wallet right now, read out the numbers clearly, and then tell me the OTP you receive on your phone so I can reverse the charge and block your card from further misuse.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_117"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Hello sir, this is Inspector Santosh Kumar calling from the Cyber Crime Helpline headquarters in New Delhi, and I am informing you that your mobile number and bank accounts are actively being used for human trafficking and drug syndicates. An arrest warrant has already been issued against your name, but you have one final chance to clear your name by cooperating with our digital investigation team via a secure video call right now. Turn on your laptop camera, log into Skype, connect with our senior officer immediately, and keep your net banking open so we can inspect your financial statements and verify your funds are clean.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_118"
+ },
+ {
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Dear sir, I am calling from the Amazon India customer security desk because our automated fraud detection system has caught someone trying to buy high value electronics worth one lakh rupees using your saved payment card and account credentials. To stop this fraudulent order from being shipped to a fraudulent address, you need to cooperate with our refund and cancellation desk right away by purchasing Google Play gift cards to prove your identity and reverse the transaction. Go to the nearest departmental store right now, buy the gift cards worth twenty thousand rupees each, scratch the back codes, and read them out to me on this call before your account gets permanently suspended.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_tech_support_en_119"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "hi",
+  "text": "Namaskar ji, main Cyber Crime Delhi branch se Inspector Sharma bol raha hoon aur aapka Aadhaar card number ek illegal money laundering case me use hua hai. Aapke naam par ek courier Mumbai customs se pakda gaya hai jisme drugs aur fake passports nikle hain. Yeh ek national security ka mamla hai isliye turant video call par aaiye aur kisi ko mat bataiye nahi toh arrest warrant nikal jayega.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_hi_120"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "hi",
+  "text": "Hello sir, main CBI officer Verma baat kar raha hoon aur aapka mobile number aur bank account ek bada criminal syndicate ke saath link ho gaya hai. Aapke against Supreme Court se digital arrest order paas ho gaya hai kyunki aapne illegal transactions kiye hain. Aapko right now apna saara paisa RBI ke safe verification account me transfer karna hoga nahi toh police aapke ghar raid karegi.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_hi_121"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "hi",
+  "text": "Suniyega, main Narcotics Control Bureau se officer Khan bol raha hoon aur aapke naam ka ek parcel international destination par dispatch hua hai jisme high-value narcotics aur illegal items mile hain. Aapka yeh direct involvement hai isliye hum aapka account block karne wale hain aur immediate arrest hoga. Aapko ek minute ke liye bhi phone disconnect nahi karna hai aur apna saara balance hamare diye gaye UPI ID par bhej dena hai.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_hi_122"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "hi",
+  "text": "Arre madamji, aapka phone switch off mat kijiye, main Cyber Cell Mumbai se ACP Mishra bol raha hoon aur aapke current account se ek criminal ko heavy funds transfer hue hain. Aapka yeh jo SIM card hai, iska misuse karke financial fraud kiya gaya hai jiske liye aapko digital custody me liya ja raha hai. Aapko chupchaap ek safe account me funds transfer karne honge, warna aapko jail jana padega.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_hi_123"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "hi",
+  "text": "Good morning sir, main Telecom Regulatory Authority of India aur Cyber Crime department ke joint investigation team se bol raha hoon. Aapka yeh jo mobile number hai, iske through kai saare fraud calls kiye gaye hain aur aapke sabhi bank accounts ko immediately freeze kiya ja raha hai. Agar aapko arrest se bachna hai toh aapko hamare secure channel par aakar turant verification ke liye funds transfer karne honge.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_hi_124"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "hi",
+  "text": "Namaste ji, main Customs Department se Senior Officer Gupta bol raha hoon aur Delhi airport par aapka ek parcel pakda gaya hai jisme illegal cash aur foreign currency hai. Aapke khilaf money laundering ka case ban gaya hai aur CBI ne aapke arrest ka order bhi issue kar diya hai. Aapko apna poora paisa Government Reserve Bank ke verification account me transfer karna hoga aur yeh baat kisi ko nahi batani hai.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_hi_125"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "hi",
+  "text": "Hello sir, main Cyber Crime headquarters se Inspector Rajesh bol raha hoon aur aapke naam par ek bomb threat aur financial scam ka case register hua hai. Aapke sabhi bank accounts aur PAN card ko blacklisted kar diya gaya hai aur aapko abhi ke abhi digital arrest me rakha ja raha hai. Aapko apna saara paisa safe custody ke liye hamare account me transfer karna padega, right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_hi_126"
+ },
+ {
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "hi",
+  "text": "Suniae ji, main Crime Branch se officer Chauhan bol raha hoon aur aapka account ek hawala racket me pakda gaya hai jisme terrorist funding ki gayi hai. Aapke ghar par police team pahunchne wali hai agar aapne cooperate nahi kiya toh aapko lifetime imprisonment ho jayegi. Aapko turant video call par rehna hai aur apna saara balance mere bataye hue safe account me transfer karna hai, kisi ko ek shabd bhi mat batana.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_digital_arrest_hi_127"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "hi",
+  "text": "Hello sir, main Cyber Crime Department se bol raha hoon, aapka Aadhaar number illegal activities mein use hua hai aur arrest warrant issue ho gaya hai. Case close karne ke liye abhi apna full details verify karo aur right now WhatsApp par document bhejo.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_hi_128"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "hi",
+  "text": "Good morning sir, main State Bank of India ke head office se bol raha hoon, aapka debit card block hone wala hai kyunki aapka KYC update pending hai. Aapko abhi apna 16-digit card number aur peeche diya hua CVV number batana padega.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_hi_129"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "hi",
+  "text": "Arre sir jaldi suno, main Paytm customer care se bol raha hoon, aapke wallet mein jo 5000 rupees cashback aaya hai woh freeze ho gaya hai. Usko unfreeze karne ke liye bas ek chhota sa OTP aayega, woh mujhe turant batao.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_hi_130"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "hi",
+  "text": "Namaskar sir, main Vodafone-Idea ki main branch se call kar raha hoon, aapka SIM card 24 ghante mein permanent block ho jayega kyunki verification complete nahi hua hai. Aapko bas apna PAN card number aur date of birth confirm karna hai.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_hi_131"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "hi",
+  "text": "Sunie sir, main HDFC Bank fraud prevention team se bol raha hoon, aapke account se unauthorized transaction hone ki koshish hui hai. Safe side ke liye humein abhi ke abhi aapka UPI PIN aur account password chahiye warna sara paisa udd jayega.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_hi_132"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "hi",
+  "text": "Hello sir, main Airtel payment bank se bol raha hoon, aapka netbanking aaj hi expire ho raha hai aur agar abhi update nahi kiya toh account deactivate ho jayega. Turant apna ATM card ka expiry aur CVV share karo taaki process complete ho.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_hi_133"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "hi",
+  "text": "Sir ji dhyaan se suniye, main Reserve Bank of India ke verification desk se bol raha hoon, aapke naam par ek fraudulent loan account khula hai. Usko cancel karne ke liye aapko abhi apna confidential OTP aur secret PIN kisi ko bhi bina bataye mujhe dena hoga.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_hi_134"
+ },
+ {
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "hi",
+  "text": "Hello sir, main Axis Bank ke credit card division se bol raha hoon, aapke reward points lapse hone wale hain jinko cash mein convert karna zaroori hai. Points redeem karne ke liye bas apna registered mobile number aur aaya hua OTP mujhe batao right now.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_kyc_otp_hi_135"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "hi",
+  "text": "Namaskar sir, main National Lottery Department se bol raha hoon aur aapko badhaai ho ki aapka mobile number 25 lakh rupaye ke lucky draw mein select ho gaya hai. Ye ek government verified legal process hai jiske liye aapko sabse pehle 4,500 rupees ka GST aur file charge immediately transfer karna hoga. Aapko ye paisa kisi ko nahi batana hai aur right now diye gaye UPI ID par bhejna hai warna aapka prize cancel ho jayega.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_hi_136"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "hi",
+  "text": "Hello sir, good morning, main Amazon Global festive offer department se baat kar raha hoon aur aapne ek brand new SUV car win ki hai. Is grand gift ko claim karne ke liye technical verification zaroori hai, isliye aapko security clearance ke taur par 7,999 rupees ka insurance fee pay karna padega. Aap jaldi se Google Pay ya PhonePe use karke payment kijiye aur apna OTP ya UPI PIN mujhe mat bataiyega, bas transaction complete kijiye.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_hi_137"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "hi",
+  "text": "Dear customer, aapka Kaun Banega Crorepati mega lucky draw mein 50 lakh cash prize lag gaya hai jiska registration department se main bol raha hoon. Ye ek highly confidential process hai jisme aapko dispatch charges aur processing fee ke roop mein 6,200 rupees ka bank transfer karna hoga. Agar aapne right now payment nahi kiya toh aapke upar legal action liya jayega aur police arrest bhi kar sakti hai, isliye turant transfer karo.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_hi_138"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "hi",
+  "text": "Namashkar sir, main State Bank reward portal se bol raha hoon aur aapke credit card par ek special 10,000 ka cashback aur iPhone 15 gift voucher laga hai. Isko activate karne ke liye system verification mang raha hai aur aapko ek chota sa courier charge 1,499 rupees ka pay karna hoga. Aapko ye amount Amazon gift card ke madhyam se bhejna hai aur kisi bhi bank employee ya family member ko iske baare mein bilkul mat batana.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_hi_139"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "hi",
+  "text": "Hello sir, greetings from Royal International Lucky Draw Corporation, aapka number aaj ke bumper prize ke liye randomly chuna gaya hai jisme aapko 35 lakh cash mil raha hai. Is prize money ko aapke account mein credit karne ke liye pehle 5,500 rupees ka custom clearance tax deposit karna padega. Aap turant apna UPI app open karke payment send the money option se kariye, warna aapka account block ho jayega aur offer expire ho jayega.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_hi_140"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "hi",
+  "text": "Sir ji namaskar, main Jio-Airtel joint lucky draw scheme se bol raha hoon aur aapko ek naya tractor aur 10 lakh rupaye ka gift mila hai. Is gift ko aapke ghar tak pahunchane ke liye courier insurance charge 3,100 rupees ka pehle hi jama karna hota hai. Aap right now hamare official number par UPI ke through payment kijiye aur yaad rakhiye, ye baat aapko secrecy maintain karte hue karni hai, kisi ko bhi mat batana.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_hi_141"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "hi",
+  "text": "Hello dear sir, main Ministry of Finance ke lucky scheme department se baat kar raha hoon aur aapke naam par 20 lakh ka cash reward nikla hai. Is legal transaction ke liye aapko verification fee aur GST ke taur par 8,500 rupees ka payment immediately karna hoga. Aap apna CVV ya OTP mat share karna, bas direct hamare given bank account number mein fund transfer kar do warna government rules ke mutabik aap par fine lagega.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_hi_142"
+ },
+ {
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "hi",
+  "text": "Namaskar sir, main Flipkart big billion day mega contest ka senior manager bol raha hoon aur aapne ek luxury sedan car jeet li hai. Isko claim karne ke liye pehle registration aur documentation ka 5,000 rupees ka fee dena padega jo ki refundable hai. Aapko ye payment abhi ke abhi UPI ya gift card ke through send the money karna hoga, aur agar aapne kisi se bhi discuss kiya toh aapko arrest kiya ja sakta hai.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_lottery_prize_hi_143"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "hi",
+  "text": "Hello Grandpa, main aapka grandson bol raha hoon urgent emergency mein hoon! Mera car accident ho gaya hai aur police ne mujhe arrest kar liya hai, immediately mujhe 50,000 rupees UPI transfer karke bhejo right now! Yeh baat please apne tak hi rakhna, mummy-papa ko bilkul mat batana warna aur bada problem ho jayega.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_hi_144"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "hi",
+  "text": "Namaste uncle ji, main local thana se Inspector Sharma bol raha hoon. Aapke bete ka ek serious accident case mein involvement hai aur use custody mein le liya gaya hai, agar use bachana hai toh abhi hospital bill ke liye 1 lakh rupees UPI se transfer karo! Ye legal procedure hai isliye do not tell anyone in the family, warna case aur strong ho jayega.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_hi_145"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "hi",
+  "text": "Hello dadi ji, main Rahul ka friend bol raha hoon. Rahul ka night mein ek bahut bada accident ho gaya hai aur wo abhi ICU mein critical condition mein hai, doctor ne bol diya hai ki emergency surgery ke liye turant 75,000 rupees bhejo! Aap jaldi se apne phone ka OTP ya PIN share mat karna bas seedha UPI ID pe send the money immediately.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_hi_146"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "hi",
+  "text": "Aapko urgent call mil raha hai City Hospital se, main Dr. Verma bol raha hoon. Aapka nephew yahan emergency ward mein admit hai aur uska blood transfusion aur operation hona hai, jiska cost 40,000 rupees hai jo abhi pay karna padega. Ye confidential medical emergency hai isliye do not tell anyone, turant payment transfer karo.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_hi_147"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "hi",
+  "text": "Hello sir, main Cyber Crime Cell se bol raha hoon aur aapke son ke IP address se illegal transactions trace hue hain. Use abhi detention mein rakha gaya hai aur immediate bail ke liye 1.5 lakh rupees ka settlement amount pay karna hoga. Ye national security matter hai isliye do not tell anyone, right now UPI ke through transfer karo.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_hi_148"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "hi",
+  "text": "Listen to me carefully, main aapke son ka lawyer bol raha hoon. Court me judge ke samne case dismiss karwane ke liye abhi ke abhi 30,000 rupees ka fine bharna padega warna direct jail bhej denge. Time bahut kam hai, jaldi se UPI ya gift card ke through send the money right now aur do not tell anyone about this call.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_hi_149"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "hi",
+  "text": "Hello aunty, main airport authority se officer bol raha hoon. Aapka grandson international flight catch karne wala tha par uske paas illegal currency pakdi gayi hai aur customs department ne use arrest kar liya hai. Agar mamla yahin dabana hai toh 60,000 rupees immediately transfer karo aur dhyan rahe do not tell anyone at home.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_hi_150"
+ },
+ {
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "hi",
+  "text": "Emergency alert, main city central hospital se nurse bol rahi hoon. Aapka son road accident mein buri tarah injured ho gaya hai aur blood units arrange karne ke liye 25,000 rupees ka cash deposit chahiye. Aap turant apna UPI app kholo aur send the money immediately, aur kisi ko bhi phone pe mat batana warna panic ho jayega.",
+  "split": "train_direct",
+  "model": "gemini-3.5-flash-lite",
+  "id": "train_direct_scam_relative_emergency_hi_151"
+ }
+]

@@ -202,17 +202,17 @@ function setTile(id, {val, sub, meter, tone}) {
 const toneOf = (v, hot = 0.6, warm = 0.25) => (v >= hot ? "hot" : v >= warm ? "warm" : null);
 function tilesFromComponents(c, hit) {
   setTile("fp", hit ? {val: "Known recording", sub: "Audio matches a known scam recording.", meter: c.fingerprint, tone: "hot"} : {val: "No match", sub: "Not a recording we already know.", meter: 0, tone: null});
-  setTile("script", {val: pct(c.script, 0), sub: "Strength of match to known scam scripts.", meter: c.script, tone: toneOf(c.script)});
+  setTile("script", {val: pct(c.script, 0), sub: "How scam-like the wording is so far.", meter: c.script, tone: toneOf(c.script)});
   setTile("flags", {val: pct(c.redflags, 0), sub: "Strength of red-flag phrases heard so far.", meter: c.redflags, tone: toneOf(c.redflags)});
 }
 function tilesFromResult(r) {
   const c = r.final.components, hit = r.fingerprint.length && c.fingerprint > 0;
   if (hit) { const m = r.fingerprint[0]; setTile("fp", {val: "Known recording", sub: `${m.aligned_hashes.toLocaleString()} of ${m.query_hashes.toLocaleString()} fingerprint hashes align.`, meter: c.fingerprint, tone: "hot"}); }
   else setTile("fp", {val: "No match", sub: r.fingerprint.length ? `Only ${r.fingerprint[0].aligned_hashes} hashes align: not a known recording.` : "Not a recording we already know.", meter: 0, tone: null});
-  const s = r.script[0];
-  setTile("script", !s ? {val: "–", sub: "No speech to compare.", meter: 0}
-    : c.script > 0 ? {val: pct(s.similarity, 0), sub: `Similarity to the closest known script (${TYPE[s.scam_type] || s.scam_type}).`, meter: c.script, tone: toneOf(c.script)}
-    : {val: "No match", sub: `Closest script is only ${pct(s.similarity, 0)} similar: below the match threshold.`, meter: 0});
+  const s = r.script[0], kind = s ? (TYPE[s.scam_type] || s.scam_type) : "scam";
+  setTile("script", !r.transcript.length ? {val: "–", sub: "No speech to analyse.", meter: 0}
+    : c.script > 0 ? {val: pct(c.script, 0), sub: `The wording is typical of a ${kind}.`, meter: c.script, tone: toneOf(c.script)}
+    : {val: "Ordinary", sub: "The wording looks like an ordinary call, not a scam.", meter: 0});
   const act = r.red_flags.filter((f) => !f.negated), neg = r.red_flags.length - act.length;
   setTile("flags", {val: `${act.length} active`, sub: act.length ? [...new Set(act.map((f) => f.category.replace("_", " ")))].join(", ") + (neg ? ` · ${neg} cleared by context` : "") : (neg ? `${neg} phrase${neg > 1 ? "s" : ""} cleared by safe context.` : "No red-flag phrases."), meter: c.redflags, tone: toneOf(c.redflags)});
   const v = r.voice;
@@ -251,7 +251,7 @@ function renderPipeline(r) {
   barRows($("sims"), r.script.map((x) => [x.script_id.replace("scam_", ""), x.similarity]), {tone: (v) => (v >= 0.78 ? "bad" : v >= 0.63 ? "warn" : "")});
   const act = {}; for (const f of r.red_flags) { const k = f.category.replace("_", " "); act[k] = act[k] || {on: 0, off: 0}; act[k][f.negated ? "off" : "on"]++; }
   $("flag-chips").innerHTML = Object.entries(act).map(([k, v]) => v.on ? `<span class="chip">${esc(k)} <b>${v.on}</b></span>` : `<span class="chip off">${esc(k)} <b>${v.off}</b></span>`).join("") || '<span class="muted small">No red-flag phrases.</span>';
-  barRows($("components"), [["Fingerprint", c.fingerprint], ["Script match", c.script], ["Red flags", c.redflags], ["Voice (unused)", c.voice]], {fmt: (v) => pct(v, 0)});
+  barRows($("components"), [["Fingerprint", c.fingerprint], ["Wording", c.script], ["Red flags", c.redflags], ["Voice (unused)", c.voice]], {fmt: (v) => pct(v, 0)});
   $("formula").textContent = `score = 100·(1 − Π(1 − wᵢ·sᵢ)) = ${r.final.score.toFixed(1)}   with weights fp 0.95, script 0.80, flags 0.60, voice 0.25`;
   const tm = Object.entries(r.timings_ms).filter(([k]) => k !== "total");
   barRows($("timings"), tm, {max: Math.max(...tm.map(([, v]) => v)), fmt: (v) => v.toFixed(0)});
@@ -288,16 +288,30 @@ function redrawAll() {
 
 /* ================= agent ================= */
 function agentState(s) { const el = $("agent-state"); el.dataset.s = s; el.textContent = {idle: "Ready", thinking: "Thinking", speaking: "Speaking", listening: "Listening"}[s] || s; }
-function stopSpeaking() { if (player) { player.pause(); player = null; } if ("speechSynthesis" in window) speechSynthesis.cancel(); agentState("idle"); }
+let agentSpeaking = false, speakFailsafe = null;
+const holds = new Set();                              // reasons the (simulated) call must pause: the bot is talking, or the user is asking
+function setHold(reason, on) { on ? holds.add(reason) : holds.delete(reason); if (live && live.hold) live.hold(holds.size > 0); }
+function speakingState(on) {
+  agentSpeaking = on; setHold("agent", on); agentState(on ? "speaking" : "idle");
+  clearTimeout(speakFailsafe); if (on) speakFailsafe = setTimeout(() => speakingState(false), 45000);   // never stay muted forever
+}
+function stopSpeaking() {
+  if (player) { const p = player; player = null; p.onended = p.onerror = p.onplaying = null; p.pause(); }
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+  speakingState(false);
+}
 function speak(text) {
   if (!speakOn || !("speechSynthesis" in window)) return;
-  stopSpeaking(); const u = new SpeechSynthesisUtterance(text); u.onend = () => agentState("idle"); agentState("speaking"); speechSynthesis.speak(u);
+  stopSpeaking(); const u = new SpeechSynthesisUtterance(text);
+  u.onstart = () => speakingState(true); u.onend = u.onerror = () => speakingState(false);
+  speakingState(true); speechSynthesis.speak(u);
 }
 function sayAudio(url, text) {
   if (!speakOn) return; if (!url) { speak(text); return; }
-  stopSpeaking(); player = new Audio(url); agentState("speaking");
-  player.onended = () => { player = null; agentState("idle"); }; player.onerror = () => speak(text);
-  player.play().catch(() => speak(text));
+  stopSpeaking(); const p = new Audio(url); player = p; speakingState(true);
+  p.onended = () => { if (player === p) player = null; speakingState(false); };
+  p.onerror = () => { if (player === p) player = null; speak(text); };
+  p.play().catch(() => { if (player === p) player = null; speak(text); });
 }
 function addBubble(kind, text) { const d = document.createElement("div"); d.className = `bubble ${kind}`; d.textContent = text; $("agent-log").appendChild(d); $("agent-log").scrollTop = 1e9; return d; }
 function enableAgent(on) { for (const id of ["btn-ptt", "ask-text", "btn-ask"]) $(id).disabled = !on; document.querySelectorAll(".quick button").forEach((b) => (b.disabled = !on)); }
@@ -309,7 +323,7 @@ function buildQuick(level) {
 }
 async function askAgent(question, audioBlob) {
   if (!current) return;
-  stopSpeaking(); agentState("thinking"); enableAgent(false);
+  stopSpeaking(); setHold("ptt", audioBlob != null); agentState("thinking"); enableAgent(false);
   const userB = addBubble("user", question || "…"), typing = addBubble("agent typing", ""); typing.innerHTML = "<i></i><i></i><i></i>";
   try {
     let res;
@@ -322,19 +336,41 @@ async function askAgent(question, audioBlob) {
   } catch (e) {
     typing.remove(); agentState("idle"); userB.textContent = userB.textContent === "…" ? "(voice question)" : userB.textContent;
     addBubble("agent", e instanceof TypeError ? "I can't reach the server right now." : e.message);
-  } finally { enableAgent(true); }
+  } finally { enableAgent(true); setHold("ptt", false); }
 }
-let rec = null, chunks = [];
+let rec = null, chunks = [], pttHeld = false, pttStartedAt = 0, pttToggled = false;
 async function pttStart(e) {
-  e.preventDefault(); if (rec || $("btn-ptt").disabled) return; stopSpeaking();
+  e.preventDefault(); if ($("btn-ptt").disabled) return;
+  if (rec && pttToggled) { pttToggled = false; pttStop(true); return; }          // second tap ends a tap-to-talk recording
+  if (rec) return;
+  pttHeld = true; pttStartedAt = performance.now(); stopSpeaking(); setHold("ptt", true);
   try {
     const stream = await navigator.mediaDevices.getUserMedia({audio: {echoCancellation: true, noiseSuppression: true}});
+    const quickTap = !pttHeld && performance.now() - pttStartedAt < 600;        // a tap on an already-allowed mic
+    if (!pttHeld && !quickTap) {                                                // released while the permission prompt was open
+      stream.getTracks().forEach((t) => t.stop()); setHold("ptt", false);
+      addBubble("sys", "Microphone is ready. Hold the mic button (or tap it once, then tap again) and speak."); agentState("idle"); return;
+    }
     chunks = []; rec = new MediaRecorder(stream); rec.ondataavailable = (ev) => chunks.push(ev.data);
-    rec.onstop = () => { stream.getTracks().forEach((t) => t.stop()); const b = new Blob(chunks, {type: rec.mimeType}); rec = null; $("btn-ptt").classList.remove("recording"); b.size > 2000 ? askAgent(null, b) : agentState("idle"); };
+    rec.onstop = () => {
+      stream.getTracks().forEach((t) => t.stop()); const b = new Blob(chunks, {type: rec.mimeType}); rec = null; pttToggled = false;
+      $("btn-ptt").classList.remove("recording");
+      if (b.size > 2000) askAgent(null, b);
+      else { setHold("ptt", false); agentState("idle"); addBubble("sys", "I didn't catch that. Hold the mic button while you speak, or tap once to start and once to stop."); }
+    };
     rec.start(); $("btn-ptt").classList.add("recording"); agentState("listening");
-  } catch { addBubble("agent", "Microphone permission was denied. You can type your question instead."); }
+    if (!pttHeld) pttToggled = true;                                            // tap: keep recording until the next tap
+  } catch (err) {
+    setHold("ptt", false); agentState("idle");
+    addBubble("agent", err && err.name === "NotFoundError" ? "No microphone was found on this device." : "Microphone permission was denied. Allow it in the browser's address bar, or type your question instead.");
+  }
 }
-const pttStop = () => { if (rec && rec.state === "recording") rec.stop(); };
+function pttStop(force = false) {
+  pttHeld = false;
+  if (!rec || rec.state !== "recording") return;
+  if (!force && performance.now() - pttStartedAt < 450) { pttToggled = true; return; }   // a tap, not a hold: keep listening
+  rec.stop();
+}
 
 function showAlert(r) {
   const lv = r.final.level;
@@ -408,20 +444,48 @@ function openLive(kind, name) {
 }
 function sendPCM(ws, f32) {                           // Float32 16 kHz -> PCM16; silenced while the agent talks (half-duplex)
   if (ws.readyState !== 1) return;
-  const pcm = new Int16Array(f32.length), mute = !!player || ("speechSynthesis" in window && speechSynthesis.speaking);
-  if (!mute) for (let i = 0; i < f32.length; i++) pcm[i] = Math.max(-32768, Math.min(32767, Math.round(f32[i] * 32767)));
+  const pcm = new Int16Array(f32.length);
+  if (!agentSpeaking) for (let i = 0; i < f32.length; i++) pcm[i] = Math.max(-32768, Math.min(32767, Math.round(f32[i] * 32767)));
   ws.send(pcm.buffer);
 }
+function makeResampler(inRate) {                      // linear resampler to 16 kHz (only used if the browser would not give a 16 kHz context)
+  const ratio = inRate / 16000; let pos = 0, tail = new Float32Array(0);
+  return (block) => {
+    const x = new Float32Array(tail.length + block.length); x.set(tail); x.set(block, tail.length);
+    const out = []; while (pos + 1 < x.length) { const i = Math.floor(pos), f = pos - i; out.push(x[i] * (1 - f) + x[i + 1] * f); pos += ratio; }
+    const keep = Math.floor(pos); tail = x.slice(keep); pos -= keep; return Float32Array.from(out);
+  };
+}
+function setMeter(level) { const m = $("mic-meter"); m.hidden = level == null; if (level != null) m.firstElementChild.style.width = `${Math.min(100, Math.round(Math.sqrt(level) * 260))}%`; }
 async function startMic() {
+  // Create the AudioContext NOW, synchronously inside the click: browsers only let it run if it is created while the
+  // click's user activation is still valid, and the permission prompt below can take longer than that window.
+  let ctx; try { ctx = new AudioContext({sampleRate: 16000}); } catch { ctx = new AudioContext(); }
   let stream;
   try { stream = await navigator.mediaDevices.getUserMedia({audio: {echoCancellation: true, noiseSuppression: true, channelCount: 1}}); }
-  catch { showSession(false); setStatus("Mic blocked", "err"); neutralBanner("Microphone permission was denied. You can upload a recording or try an example instead."); return; }
-  const ws = await openLive("mic", "Live call (microphone)").catch(() => null); if (!ws) { stream.getTracks().forEach((t) => t.stop()); showSession(false); return; }
-  const ctx = new AudioContext({sampleRate: 16000}); await ctx.audioWorklet.addModule("pcm-worklet.js");
-  const src = ctx.createMediaStreamSource(stream), node = new AudioWorkletNode(ctx, "pcm-forwarder"); let buf = [];
-  node.port.onmessage = (m) => { buf.push(...m.data); if (buf.length >= 1600) sendPCM(ws, Float32Array.from(buf.splice(0, 1600))); };
+  catch (err) {
+    ctx.close(); showSession(false); setStatus("Mic blocked", "err");
+    neutralBanner(err && err.name === "NotFoundError" ? "No microphone was found. Plug one in, or upload a recording instead." : "Microphone permission was denied. Allow it in the address bar, or upload a recording or try an example instead."); return;
+  }
+  const ws = await openLive("mic", "Live call (microphone)").catch(() => null);
+  if (!ws) { stream.getTracks().forEach((t) => t.stop()); ctx.close(); showSession(false); return; }
+  await ctx.resume();                                  // a context created before a long permission prompt may still be suspended
+  await ctx.audioWorklet.addModule("pcm-worklet.js");
+  const src = ctx.createMediaStreamSource(stream), node = new AudioWorkletNode(ctx, "pcm-forwarder");
+  const resample = ctx.sampleRate === 16000 ? (b) => b : makeResampler(ctx.sampleRate);
+  let buf = [], peak = 0, heard = 0, samples = 0, lvl = 0, warned = false;
+  node.port.onmessage = (m) => {
+    const b = resample(m.data); for (let i = 0; i < b.length; i++) { buf.push(b[i]); lvl = Math.max(lvl * 0.9995, Math.abs(b[i])); }
+    samples += b.length; peak = Math.max(peak, lvl);
+    if (buf.length >= 1600) {
+      const f = Float32Array.from(buf.splice(0, 1600)); sendPCM(ws, f);
+      let e = 0; for (const v of f) e += v * v; e /= f.length; setMeter(e);
+      if (e > 4e-6) heard++;
+      if (!warned && samples > 16000 * 6 && heard < 3) { warned = true; banner("I can't hear any sound from the microphone. Check that the right input device is selected, that it isn't muted, and that you're not in another app that holds the mic.", "neutral"); }
+    }
+  };
   src.connect(node);
-  live.stopFn = () => { src.disconnect(); node.disconnect(); stream.getTracks().forEach((t) => t.stop()); ctx.close(); if (ws.readyState === 1) ws.send(JSON.stringify({type: "stop"})); setStatus("Finishing…", "busy"); };
+  live.stopFn = () => { setMeter(null); src.disconnect(); node.disconnect(); stream.getTracks().forEach((t) => t.stop()); ctx.close(); if (ws.readyState === 1) ws.send(JSON.stringify({type: "stop"})); setStatus("Finishing…", "busy"); };
 }
 const neutralBanner = (t) => { showSession(true); banner(t, "neutral"); };
 async function simulateLive(id, title) {
@@ -430,13 +494,20 @@ async function simulateLive(id, title) {
   const ws = await openLive("sim", title).catch(() => null); if (!ws) { ctx.close(); showSession(false); return; }
   const data = audio.getChannelData(0), src = ctx.createBufferSource(); src.buffer = audio; src.connect(ctx.destination);
   ctx.resume().catch(() => {}); src.start();
-  const p0 = performance.now(); let sent = 0;          // paced by the wall clock (a suspended AudioContext has no clock)
+  const p0 = performance.now(); let sent = 0, heldSince = null, heldTotal = 0;
+  // While the assistant speaks (or the user is asking a question) the call recording pauses, like a real call on hold:
+  // both the playback and the stream to the server, so nothing is lost and nothing overlaps.
+  live.hold = (on) => {
+    if (on && heldSince == null) { heldSince = performance.now(); ctx.suspend().catch(() => {}); }
+    else if (!on && heldSince != null) { heldTotal += performance.now() - heldSince; heldSince = null; ctx.resume().catch(() => {}); }
+  };
   const timer = setInterval(() => {
-    const due = Math.min(data.length, Math.floor((performance.now() - p0) / 1000 * 16000));
+    const elapsed = ((heldSince ?? performance.now()) - p0 - heldTotal) / 1000;
+    const due = Math.min(data.length, Math.floor(elapsed * 16000));
     while (due - sent >= 1600 || (due === data.length && sent < data.length)) { const n = Math.min(1600, data.length - sent); sendPCM(ws, data.subarray(sent, sent + n)); sent += n; }
     if (sent >= data.length) { clearInterval(timer); if (ws.readyState === 1) ws.send(JSON.stringify({type: "stop"})); setStatus("Finishing…", "busy"); }
   }, 100);
-  live.stopFn = () => { clearInterval(timer); try { src.stop(); } catch {} ctx.close(); if (ws.readyState === 1) ws.send(JSON.stringify({type: "stop"})); setStatus("Finishing…", "busy"); };
+  live.stopFn = () => { clearInterval(timer); live.hold = null; try { src.stop(); } catch {} ctx.close(); if (ws.readyState === 1) ws.send(JSON.stringify({type: "stop"})); setStatus("Finishing…", "busy"); };
 }
 
 /* ================= actions ================= */
@@ -576,9 +647,10 @@ $("btn-new").addEventListener("click", newCall);
 $("alert-close").addEventListener("click", () => { $("alert").hidden = true; });
 $("ask-form").addEventListener("submit", (e) => { e.preventDefault(); const q = $("ask-text").value.trim(); if (q) { $("ask-text").value = ""; askAgent(q); } });
 $("btn-ptt").addEventListener("pointerdown", pttStart);
-for (const ev of ["pointerup", "pointerleave", "pointercancel"]) $("btn-ptt").addEventListener(ev, pttStop);
+for (const ev of ["pointerup", "pointercancel"]) $("btn-ptt").addEventListener(ev, () => pttStop());
 $("btn-ptt").addEventListener("keydown", (e) => { if ((e.key === " " || e.key === "Enter") && !e.repeat) pttStart(e); });
 $("btn-ptt").addEventListener("keyup", (e) => { if (e.key === " " || e.key === "Enter") pttStop(); });
+window.addEventListener("blur", () => { pttHeld = false; });
 $("speak-toggle").addEventListener("click", () => {
   speakOn = !speakOn; $("speak-toggle").setAttribute("aria-pressed", String(speakOn)); $("speak-toggle").setAttribute("aria-label", speakOn ? "Spoken replies on" : "Spoken replies off");
   $("speak-icon").setAttribute("href", speakOn ? "#i-volume" : "#i-volume-off"); if (!speakOn) stopSpeaking();

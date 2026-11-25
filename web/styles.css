@@ -302,3 +302,5 @@ details.more { margin-top: var(--s5); } details.more summary { cursor: pointer; 
   .actions ol, .two { grid-template-columns: 1fr; } .cards { grid-template-columns: 1fr; } .step { grid-template-columns: 1fr; } .step-n { display: none; } .tiles { grid-template-columns: 1fr 1fr; }
   .hero h1 { font-size: 38px; } .samples-head { margin-bottom: 0; } .head-actions { width: 100%; justify-content: flex-end; flex-wrap: wrap; } #player { max-width: 100%; flex: 1 1 100%; }
 }
+.mic-meter { width: 64px; height: 8px; border-radius: 4px; background: var(--surface-3); overflow: hidden; align-self: center; }
+.mic-meter i { display: block; height: 100%; width: 0; background: var(--safe); border-radius: 4px; transition: width .08s linear; }
