@@ -11,3 +11,11 @@ artifacts/*
 *.mp3
 *.wav
 node_modules/
+
+# LaTeX build files
+report/*.aux
+report/*.log
+report/*.out
+report/*.bbl
+report/*.blg
+report/*.toc
