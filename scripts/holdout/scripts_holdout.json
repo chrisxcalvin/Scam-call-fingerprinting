@@ -1,0 +1,128 @@
+[
+ {
+  "id": "holdout_scam_digital_arrest_en",
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "en",
+  "text": "This is Sub-Inspector Anil Desai from the Narcotics Control cell, Mumbai. A consignment booked with your identity card was seized at the airport. It contained fake passports and drugs, and a warrant has been issued against you. You must stay on this video call with us for the full verification. If you cut the call, the local station will come to pick you up tonight. To prove you are innocent, move your fixed deposit into the Reserve Bank verification account. It will be refunded after the inquiry."
+ },
+ {
+  "id": "holdout_scam_kyc_otp_en",
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "en",
+  "text": "Madam, I am speaking from the card department of your bank. Your debit card will be deactivated today because your PAN details are not linked. I have just sent a verification code to your mobile. Please tell me that code so I can complete the linking from my side. Otherwise you will not be able to withdraw any money from tomorrow."
+ },
+ {
+  "id": "holdout_scam_lottery_en",
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "en",
+  "text": "Good news! Your mobile number was selected in the anniversary bumper draw of your telecom company, and you have won a car and eight lakh rupees in cash. Our delivery team is ready. Before we dispatch, the government needs the GST and insurance charge of twelve thousand five hundred. Please deposit it today through UPI, and do not discuss this with anybody until the car reaches you."
+ },
+ {
+  "id": "holdout_scam_relative_en",
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "en",
+  "text": "Uncle, it's Rohan, I'm calling from a friend's phone. I got into a fight near the college and they have taken me to the station. The constable says if I pay the fine now he will let me go without a case. Please don't call papa, he will be furious. Can you send fifteen thousand to this number on Google Pay? I'll return it next week, I promise."
+ },
+ {
+  "id": "holdout_scam_courier_en",
+  "label": "scam",
+  "type": "fake_courier",
+  "lang": "en",
+  "text": "Hello, I'm calling from the international shipping desk. A parcel addressed to you is on hold at customs because the import duty has not been paid. If the duty is not cleared within twenty four hours, the parcel will be returned and a penalty will be charged. I am sending you a payment link by SMS. Open it, fill in your card number, the expiry date and the code at the back, and the parcel will be released."
+ },
+ {
+  "id": "holdout_scam_techsupport_en",
+  "label": "scam",
+  "type": "tech_support",
+  "lang": "en",
+  "text": "Hi, this is Kevin from the Windows security department. We noticed that someone in another country is trying to get into your computer, and your bank details are at risk. Please switch on your computer now. I will guide you to download a small support tool so our engineer can connect and remove the hacker. While we work, log in to your net banking so we can check that no money has gone."
+ },
+ {
+  "id": "holdout_scam_digital_arrest_hi",
+  "label": "scam",
+  "type": "digital_arrest",
+  "lang": "hi",
+  "text": "Sir, aap Mumbai Customs ki jaanch mein aa gaye hain. Aapke naam se Thailand ke liye ek packet gaya tha jisme nashe ki goliyan nikli hain. Is waqt aap hamari nigrani mein hain, kahin bahar mat jaaiye aur video on rakhiye. Ye gupt jaanch hai, isliye ghar walon ya vakeel se sampark karna jurm maana jayega. Jaanch poori hone tak apne bachat ke paise RBI ke surakshit khate mein shift kar dijiye."
+ },
+ {
+  "id": "holdout_scam_kyc_otp_hi",
+  "label": "scam",
+  "type": "kyc_otp",
+  "lang": "hi",
+  "text": "Ji, bank se baat ho rahi hai. Aapke PAN card ka link nahi mila, isliye net banking aaj shaam se band kar di jayegi. Aapke mobile par abhi ek chhota sa number gaya hoga, wahi number mujhe boliye, main system mein dalkar sab theek kar deta hoon. Der kiya to dobara chalu karwane mein hafte lag jayenge."
+ },
+ {
+  "id": "holdout_scam_relative_hi",
+  "label": "scam",
+  "type": "relative_emergency",
+  "lang": "hi",
+  "text": "Bhaiya, main Vikas ka dost Sandeep bol raha hoon. Vikas ki bike ek aadmi se takra gayi aur ab thane mein baitha hai. Police wale case likhne se pehle samjhauta karne ko keh rahe hain, bees hazaar lagenge. Vikas ne kaha ghar pe kisi ko khabar na ho. Mere paas abhi cash nahi hai, aap PhonePe se bhej dijiye na."
+ },
+ {
+  "id": "holdout_scam_lottery_hi",
+  "label": "scam",
+  "type": "lottery_prize",
+  "lang": "hi",
+  "text": "Aapko badhai! Aapke mobile number ne Diwali dhamaka scheme mein ek naya scooter aur paanch lakh rupaye ka cash inaam jeeta hai. Inaam bhejne ke liye courier aur form ki fees chhe hazaar rupaye abhi UPI se bhejni hongi. Ye scheme aaj shaam tak hi valid hai, baad mein number kisi aur ko de diya jayega."
+ },
+ {
+  "id": "holdout_legit_kyc_reminder_en",
+  "label": "legit",
+  "type": "kyc_reminder",
+  "lang": "en",
+  "text": "Dear customer, this is a reminder from your bank. Your KYC documents are due for their periodic update. Please visit your home branch with an address proof, or update them in the official mobile app. The bank will never call you to ask for your OTP, PIN or password for KYC."
+ },
+ {
+  "id": "holdout_legit_delivery_code_en",
+  "label": "legit",
+  "type": "delivery",
+  "lang": "en",
+  "text": "Hi, I'm the delivery partner with your grocery order. I'm at the main gate now. When you come down, please tell me the four digit delivery code shown in your app, so I can mark the order as delivered. Thank you."
+ },
+ {
+  "id": "holdout_legit_fraud_check_en",
+  "label": "legit",
+  "type": "fraud_alert",
+  "lang": "en",
+  "text": "Hello, this is an automated call from your bank's fraud monitoring team. We noticed a card payment of three thousand four hundred rupees at an online store. If you made this payment, press one. If you did not, press two and your card will be blocked to keep you safe. We will never ask for your card number or OTP on this call."
+ },
+ {
+  "id": "holdout_legit_hospital_en",
+  "label": "legit",
+  "type": "hospital",
+  "lang": "en",
+  "text": "Hello, is this Mrs Kapoor? This is the nurse from the City Hospital emergency ward. Your son Arjun had a minor fall during football practice and has a small cut on his arm. He is fine, and the doctor has put in two stitches. Please come to the hospital when you can, and bring his health card."
+ },
+ {
+  "id": "holdout_legit_traffic_police_en",
+  "label": "legit",
+  "type": "traffic_police",
+  "lang": "en",
+  "text": "Good evening, this is the traffic police helpdesk. A vehicle registered in your name was parked in a no parking zone yesterday. You can view the challan and pay it on the official e-challan website or at any traffic police station. Please do not pay anyone who calls you asking for money on the phone."
+ },
+ {
+  "id": "holdout_legit_electricity_en",
+  "label": "legit",
+  "type": "utility_bill",
+  "lang": "en",
+  "text": "This is a reminder from your electricity provider. Your bill of one thousand two hundred rupees is due on the fifteenth of this month. You can pay through our official app or at the nearest collection centre. Please ignore any message that threatens to cut your power tonight."
+ },
+ {
+  "id": "holdout_legit_bank_hi",
+  "label": "legit",
+  "type": "bank_alert",
+  "lang": "hi",
+  "text": "Namaste, main aapke bank ki branch se bol raha hoon. Aapka naya debit card branch mein aa gaya hai. Aap kal subah das baje ke baad apna ID proof lekar aaiye aur card le jaiye. Hum phone pe kabhi OTP ya PIN nahi maangte."
+ },
+ {
+  "id": "holdout_legit_family_hi",
+  "label": "legit",
+  "type": "family",
+  "lang": "hi",
+  "text": "Hello mummy, main Rahul bol raha hoon. Train thodi late hai, main raat nau baje tak ghar pahunch jaunga. Khana mat banana, main raste mein kha lunga. Papa ko bhi bata dena."
+ }
+]

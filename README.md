@@ -4,6 +4,14 @@ Listens to a phone call (uploaded recording or live microphone), decides whether
 
 > Course project: MSc AIML, *Speech Processing and Recognition* (MAI522-5), CIA III. Staged and synthetic data only; all names and numbers in the scripts are fictional.
 
+<p align="center"><img src="docs/screens/call-scam-dark.png" alt="ScamShield Voice analysing a scam call: verdict, evidence, transcript and the voice assistant" width="900"></p>
+
+<table><tr>
+<td><img src="docs/screens/home-dark.png" alt="Home" width="300"></td>
+<td><img src="docs/screens/call-safe-light.png" alt="A genuine bank alert, light theme" width="300"></td>
+<td><img src="docs/screens/evaluation-dark.png" alt="Evaluation dashboard" width="300"></td>
+</tr></table>
+
 ![Architecture](docs/architecture.svg)
 
 ## How it works
@@ -17,22 +25,26 @@ Listens to a phone call (uploaded recording or live microphone), decides whether
 
 Every DSP step (pre-emphasis, framing, VAD, STFT, peak picking, hashing, matching, MFCC, YIN) is implemented with NumPy/SciPy and unit-tested against `scipy`/`librosa` references. See `docs/modules/` for per-module notes with formulas (viva prep).
 
-## Results (test split, run once; thresholds calibrated on dev)
-Full tables, dev vs test, and caveats: **[docs/RESULTS.md](docs/RESULTS.md)** (generated from `run_eval` output, never typed by hand).
+## Results
+Full tables, caveats and per-split detail: **[docs/RESULTS.md](docs/RESULTS.md)** (generated from `run_eval` output, never typed by hand). Three splits, from most to least flattering:
 
-| | Test split |
-|---|---|
-| Fingerprint recall@1, every augmentation (clean, tel, GSM, SNR 20/10/5 dB, speed 0.95/1.05) | 1.0 (n = 5 each) |
-| Fingerprint false matches (legit audio or wrong script) | 0 / 173 |
-| Fusion precision / recall / FPR on legit | 0.959 / 0.875 / 0.062 (256 clips) |
-| English clips: script-similarity AUC | 1.0 |
-| Hinglish clips: script-similarity AUC | **0.745** (weak spot; see below) |
-| Live: scam calls alerted / legit calls alerted | 0.867 / 0.0 |
-| Live: fingerprint replay alert | ~2 s into the call |
-| Live: words-only latency after first red-flag phrase (p50) | 8.2 s |
-| Upload analysis per clip (p50 / p95) | 1.27 s / 2.28 s |
+| | Dev (thresholds tuned here) | Test (run once) | **Holdout (new wording, unseen voices)** |
+|---|---|---|---|
+| What it tests | library scripts, 2 voices | library scripts, 1 other voice | **10 reworded scam scripts + 8 new, tricky legit scripts, 4 unseen voices** ([how it was built](docs/HOLDOUT.md)) |
+| Scams caught (recall) | 97% | 87.5% | **11%** |
+| False alarms on legit | 0% | 6.2% | 0% |
+| Fingerprint false matches | 0 / 346 | 0 / 173 | 0 / 288 |
+| Script-similarity AUC (English / Hinglish) | 1.0 / 1.0 | 1.0 / 0.75 | **0.86 / 0.63** |
 
-**Honest limitations.** Detects *known and similar* scams, not all scams. Layer 2 numbers are a sanity check (library scripts read by other voices) until holdout paraphrases and human recordings are added. Hinglish read with a British accent defeats Whisper: on the test split 19 of 20 missed scams and all 6 false alarms are such clips. Live words-only detection needs several sentences before alerting. Live interception of phone calls is not possible on iOS/stock Android; the demo uses speakerphone/mic or uploaded audio. Not a substitute for calling your bank.
+**What this means, honestly.**
+- **Exact audio replays are caught reliably:** the fingerprint recognised every known recording through telephone band, GSM, noise down to 5 dB SNR and ±5% speed, with zero false matches on legit or unrelated audio.
+- **Scripts close to the library are caught** (dev and test), including by other voices.
+- **Genuinely reworded scams mostly are not.** On the holdout, reworded scams score about 0.62 similarity to the library (55% fall below the calibrated match floor) against 0.54 for legit calls, and the keyword lexicon misses paraphrases ("tell me that code" instead of "OTP"). Only the reworded digital-arrest script was reliably rated *high*. This is a limit of a small library plus a keyword lexicon, not just of the thresholds, and the demo must not promise otherwise.
+- **Hinglish** is weaker still, and British-accented Hinglish defeats Whisper.
+- **Live:** fingerprint replays alert about 2 s into the call; for new voices on library scripts the median is 8.2 s after the first red-flag phrase (test split).
+- Upload analysis takes 1.3 s median per call (2.3 s p95).
+
+**Other limitations.** Detects *known and similar* scams, not all scams. The holdout scripts were written by the same assistant that wrote the lexicon; independent human-written scripts and recordings are still needed. Live interception of phone calls is not possible on iOS/stock Android; the demo uses speakerphone/microphone or uploaded audio. Not a substitute for calling your bank.
 
 ## Quick start
 Requires Python 3.11 and **ffmpeg** on PATH.

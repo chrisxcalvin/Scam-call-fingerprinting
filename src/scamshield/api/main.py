@@ -40,4 +40,13 @@ async def unhandled(request: Request, exc: Exception) -> JSONResponse:
     return JSONResponse(status_code=500, content={"error": {"code": "internal", "message": "Internal server error."}})
 
 
+@app.middleware("http")
+async def no_cache_for_ui(request: Request, call_next):
+    """The UI is static files that change during development and demos: never serve a stale copy."""
+    resp = await call_next(request)
+    if not request.url.path.startswith(("/api", "/ws")):
+        resp.headers["Cache-Control"] = "no-cache"
+    return resp
+
+
 app.mount("/", StaticFiles(directory=str(WEB_DIR), html=True), name="web")

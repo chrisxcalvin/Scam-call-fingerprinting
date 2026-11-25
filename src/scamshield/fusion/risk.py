@@ -65,11 +65,11 @@ def fuse(components: RiskComponents, fp_hit: bool, *, t_s: float = 0.0, details:
     d = details or {}
     reasons: list[tuple[float, str]] = []
     if fp_hit:
-        reasons.append((9.0, f"Audio matches a known {d.get('fp_scam_type', 'scam')} scam recording"))
+        reasons.append((9.0, f"Audio matches a known {str(d.get('fp_scam_type', 'scam')).replace('_', ' ')} scam recording"))
     if s["script"] > 0:
         how = "closely match" if s["script"] >= 0.5 else "partly resemble"
         reasons.append((w["script"] * s["script"],
-                        f"Words {how} a known {d.get('script_scam_type', 'scam')} script (similarity {d.get('similarity', 0):.2f})"))
+                        f"Words {how} a known {str(d.get('script_scam_type', 'scam')).replace('_', ' ')} script (similarity {d.get('similarity', 0):.2f})"))
     for cat in d.get("flag_categories", [])[:3]:
         reasons.append((w["redflags"] * s["redflags"] * 0.99, f"Caller {CATEGORY_TEXT.get(cat, cat)}"))
     if safe_context:

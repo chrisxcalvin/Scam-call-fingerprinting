@@ -1,83 +1,226 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
 <title>ScamShield Voice</title>
 <link rel="stylesheet" href="styles.css">
+<script>
+  // set the theme before first paint (no flash)
+  (function () {
+    var t = localStorage.getItem("ss-theme") || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    document.documentElement.dataset.theme = t;
+  })();
+</script>
 </head>
 <body>
-<header>
-  <h1>ScamShield Voice</h1>
-  <nav id="tabs">
-    <button data-tab="console" class="active">Console</button>
-    <button data-tab="pipeline">Pipeline</button>
-    <button data-tab="results">Results</button>
+
+<!-- icon sprite (stroke icons, 24px grid) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-logo" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 12.5h1.5l1.2-3 2 6 1.3-3H16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 3.5v17a1 1 0 0 0 1.5.86l14-8.5a1 1 0 0 0 0-1.72l-14-8.5A1 1 0 0 0 6 3.5Z"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect width="14" height="14" x="5" y="5" rx="2"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m22 4-10 10-3-3"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-octagon" viewBox="0 0 24 24"><path d="M12 16h.01"/><path d="M12 8v4"/><path d="M15.31 2a2 2 0 0 1 1.41.59l4.69 4.69A2 2 0 0 1 22 8.69v6.62a2 2 0 0 1-.59 1.41l-4.69 4.69a2 2 0 0 1-1.41.59H8.69a2 2 0 0 1-1.41-.59l-4.69-4.69A2 2 0 0 1 2 15.31V8.69a2 2 0 0 1 .59-1.41l4.69-4.69A2 2 0 0 1 8.69 2z"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
+    <symbol id="i-volume-off" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m22 9-6 6"/><path d="m16 9 6 6"/></symbol>
+    <symbol id="i-fingerprint" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/><path d="M2 12a10 10 0 0 1 18-6"/><path d="M2 16h.01"/><path d="M21.8 16c.2-2 .131-5.354 0-6"/><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/><path d="M8.65 22c.21-.66.45-1.32.57-2"/><path d="M9 6.8a6 6 0 0 1 9 5.2v2"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 22V4"/><path d="M4 4c3-1.5 5 1.5 8 0s5-1.5 8 0v9c-3-1.5-5 1.5-8 0s-5-1.5-8 0"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"/><path d="M14 2v6h6"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="appbar">
+  <a class="brand" href="/" aria-label="ScamShield Voice home">
+    <svg class="logo" aria-hidden="true"><use href="#i-logo"/></svg>
+    <span>ScamShield <b>Voice</b></span>
+  </a>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" data-tab="console" aria-selected="true">Call</button>
+    <button role="tab" data-tab="pipeline" aria-selected="false">Under the hood</button>
+    <button role="tab" data-tab="results" aria-selected="false">Evaluation</button>
   </nav>
-  <div class="controls">
-    <button id="btn-live" title="Analyse a live call from the microphone (use headphones or speakerphone)">● Live mic</button>
-    <button id="btn-upload">⬆ Upload</button>
-    <input id="file" type="file" accept=".wav,.mp3,.m4a,.webm,audio/*" hidden>
-    <select id="sample"><option value="">▶ Play sample…</option></select>
-    <label class="speak" title="Stream the sample through the live (WebSocket) path at real-time speed"><input type="checkbox" id="as-live" checked> as live call</label>
-    <span id="status">status: <b id="status-text">loading</b></span>
+  <div class="bar-right">
+    <span class="status" id="status" data-kind="load"><i class="dot"></i><span id="status-text">Starting…</span></span>
+    <button class="icon-btn" id="theme" aria-label="Switch colour theme" title="Switch theme">
+      <svg class="ic" aria-hidden="true"><use href="#i-sun" id="theme-icon"/></svg>
+    </button>
   </div>
 </header>
-<div id="mock-banner" hidden>⚠ MOCK DATA — placeholder values for UI development, not real analysis.</div>
-<div id="alert" class="alert" hidden><span id="alert-text"></span><button id="alert-close" title="Dismiss">✕</button></div>
 
-<main id="tab-console" class="tab">
-  <section class="panel wide">
-    <div id="clip-info" class="muted">No clip yet. Upload a call recording, drop a file anywhere, or pick a sample.</div>
-    <audio id="player" controls hidden></audio>
-    <h2>Waveform <small>(green = speech by VAD)</small></h2>
-    <canvas id="cv-wave" width="900" height="110"></canvas>
-    <h2>Spectrogram <small>(0–8 kHz, dB · blue dots = fingerprint peaks · box = matched region)</small></h2>
-    <canvas id="cv-spec" width="900" height="220"></canvas>
-  </section>
-  <section class="panel center">
-    <h2>Risk</h2>
-    <canvas id="cv-gauge" width="300" height="180"></canvas>
-    <div id="level" class="level">–</div>
-    <ul id="reasons"></ul>
-  </section>
-  <section class="panel">
-    <h2>Transcript</h2>
-    <div id="transcript"><span class="muted">No analysis yet.</span></div>
-  </section>
-  <section class="panel wide">
-    <h2>Risk timeline</h2>
-    <canvas id="cv-timeline" width="900" height="150"></canvas>
-  </section>
-  <section class="panel">
-    <h2>Evidence</h2>
-    <div id="evidence"></div>
-  </section>
-  <section class="panel full">
-    <h2>Agent <small id="agent-state"></small></h2>
-    <div id="agent-log"><span class="muted">Analyse a call, then ask: “Why do you think it's a scam?” or “What should I do?”</span></div>
-    <div class="agent-row">
-      <button id="btn-ptt" disabled title="Hold to speak a question">🎤 Hold to ask</button>
-      <input id="ask-text" disabled placeholder="or type a question…" maxlength="500">
-      <button id="btn-ask" disabled>↵</button>
-      <label class="speak"><input type="checkbox" id="speak-on" checked> 🔊 Speak</label>
+<main id="main">
+
+  <!-- ============ CALL ============ -->
+  <section id="tab-console" class="view" role="tabpanel">
+
+    <!-- home: nothing analysed yet -->
+    <div id="home" class="home">
+      <div class="hero">
+        <span class="eyebrow"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg> Real-time scam-call protection</span>
+        <h1>Is this call a <em>scam</em>?</h1>
+        <p class="lead">Stream or upload a call. ScamShield listens, shows exactly why it looks suspicious, and talks you through what to do next.</p>
+        <div class="cta">
+          <button id="btn-live" class="btn primary lg"><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg>Start live call</button>
+          <button id="btn-upload" class="btn tonal lg"><svg class="ic" aria-hidden="true"><use href="#i-upload"/></svg>Upload a recording</button>
+          <input id="file" type="file" accept=".wav,.mp3,.m4a,.webm,audio/*" hidden>
+        </div>
+        <p class="hint">Or drop an audio file anywhere on this page · wav, mp3, m4a, webm · up to 5 minutes</p>
+      </div>
+
+      <ul class="how" aria-label="How it checks a call">
+        <li><span class="how-ic"><svg class="ic" aria-hidden="true"><use href="#i-fingerprint"/></svg></span><b>Acoustic fingerprint</b><span>Recognises replayed or robocall audio, even through noise, phone lines and codecs.</span></li>
+        <li><span class="how-ic"><svg class="ic" aria-hidden="true"><use href="#i-text"/></svg></span><b>What is being said</b><span>Transcribes the call and compares it with known scam scripts and red-flag phrases.</span></li>
+        <li><span class="how-ic"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg></span><b>A voice that explains</b><span>Speaks a warning and answers your questions using only this call's evidence.</span></li>
+      </ul>
+
+      <div class="samples-head">
+        <div><h2>Try an example call</h2><p class="muted">Each one shows a different behaviour of the system.</p></div>
+        <label class="switch" title="Stream the example through the live WebSocket path at real-time speed">
+          <input type="checkbox" id="as-live" checked><span class="track"><span class="knob"></span></span>
+          <span>Stream as a live call</span>
+        </label>
+      </div>
+      <div id="samples" class="sample-grid" aria-live="polite"></div>
+    </div>
+
+    <!-- session: a call is being (or has been) analysed -->
+    <div id="session" class="session" hidden>
+      <div class="session-head">
+        <div class="clip">
+          <span id="live-pill" class="pill live" hidden><i></i>LIVE <span id="live-time">0:00</span></span>
+          <h2 id="clip-title">Call</h2>
+          <span id="clip-meta" class="muted"></span>
+        </div>
+        <div class="head-actions">
+          <audio id="player" controls hidden></audio>
+          <button id="btn-stop" class="btn danger" hidden><svg class="ic" aria-hidden="true"><use href="#i-stop"/></svg>End call</button>
+          <button id="btn-new" class="btn text"><svg class="ic" aria-hidden="true"><use href="#i-refresh"/></svg>New call</button>
+        </div>
+      </div>
+
+      <div id="alert" class="banner" role="alert" hidden>
+        <svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>
+        <span id="alert-text"></span>
+        <button class="icon-btn" id="alert-close" aria-label="Dismiss"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </div>
+
+      <div class="grid">
+        <div class="col-main">
+
+          <article class="card verdict" id="verdict" data-level="safe" aria-live="polite">
+            <div class="ring-wrap" aria-hidden="true">
+              <svg class="ring" viewBox="0 0 120 120"><circle class="ring-track" cx="60" cy="60" r="52"/><circle class="ring-arc" id="ring-arc" cx="60" cy="60" r="52"/></svg>
+              <div class="ring-num"><b id="score">0</b><span>risk / 100</span></div>
+            </div>
+            <div class="verdict-body">
+              <span class="level-pill"><svg class="ic" aria-hidden="true"><use href="#i-check" id="level-icon"/></svg><span id="level">Waiting</span></span>
+              <h2 id="verdict-title">Listening…</h2>
+              <p id="verdict-sub" class="muted"></p>
+              <ul id="reasons" class="reasons"></ul>
+            </div>
+            <div id="actions" class="actions" hidden>
+              <b>What to do now</b>
+              <ol>
+                <li>Hang up. You don't owe the caller an answer.</li>
+                <li>Never share an OTP, PIN or card details.</li>
+                <li>Call the official number on your card or the bank's website.</li>
+                <li>Report it: <b>1930</b> · cybercrime.gov.in</li>
+              </ol>
+            </div>
+          </article>
+
+          <section class="tiles" id="tiles" aria-label="Evidence">
+            <article class="tile" id="tile-fp"><header><svg class="ic" aria-hidden="true"><use href="#i-fingerprint"/></svg><span>Fingerprint</span><button class="info" data-tip="Spectral-peak hashes of this audio are compared with known scam recordings. A spike at one time offset means a match." aria-label="About fingerprint"><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg></button></header><b class="tile-val" id="tv-fp">–</b><span class="tile-sub" id="ts-fp">Waiting for audio</span><div class="meter"><i id="tm-fp"></i></div></article>
+            <article class="tile" id="tile-script"><header><svg class="ic" aria-hidden="true"><use href="#i-text"/></svg><span>Script match</span><button class="info" data-tip="Sentence embeddings of what was said, compared with known scam scripts (cosine similarity)." aria-label="About script match"><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg></button></header><b class="tile-val" id="tv-script">–</b><span class="tile-sub" id="ts-script">Waiting for speech</span><div class="meter"><i id="tm-script"></i></div></article>
+            <article class="tile" id="tile-flags"><header><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg><span>Red flags</span><button class="info" data-tip="Urgency, secrecy, OTP requests, threats and payment demands. Phrases cancelled by safe context (for example 'we will never ask for your OTP') are not counted." aria-label="About red flags"><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg></button></header><b class="tile-val" id="tv-flags">–</b><span class="tile-sub" id="ts-flags">Waiting for speech</span><div class="meter"><i id="tm-flags"></i></div></article>
+            <article class="tile" id="tile-voice"><header><svg class="ic" aria-hidden="true"><use href="#i-wave"/></svg><span>Voice</span><button class="info" data-tip="Pitch, pace and pauses of the caller. Shown for context only; it does not change the score." aria-label="About voice"><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg></button></header><b class="tile-val" id="tv-voice">–</b><span class="tile-sub" id="ts-voice">Context only</span><div class="meter muted-meter"><i id="tm-voice"></i></div></article>
+          </section>
+
+          <div class="duo">
+            <article class="card">
+              <header class="card-h"><h3>Risk over the call</h3></header>
+              <canvas id="cv-timeline" class="cv timeline" aria-label="Risk score over time"></canvas>
+            </article>
+            <article class="card transcript-card">
+              <header class="card-h"><h3>Transcript</h3><span id="flag-legend" class="legend"></span></header>
+              <div id="transcript" class="transcript"><p class="empty">The transcript appears here as the call is understood.</p></div>
+            </article>
+          </div>
+
+          <article class="card">
+            <header class="card-h"><h3>Audio</h3><span class="muted small">speech is highlighted · blue dots are fingerprint peaks · green box is a matched region</span></header>
+            <canvas id="cv-wave" class="cv wave" aria-label="Waveform"></canvas>
+            <canvas id="cv-spec" class="cv spec" aria-label="Spectrogram"></canvas>
+          </article>
+        </div>
+
+        <aside class="col-agent">
+          <article class="card agent-card" id="agent">
+            <header class="agent-h">
+              <span class="agent-av"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg></span>
+              <div><h3>Ask ScamShield</h3><span id="agent-state" class="agent-state" data-s="idle">Ready</span></div>
+              <button class="icon-btn" id="speak-toggle" aria-pressed="true" aria-label="Spoken replies on" title="Spoken replies"><svg class="ic" aria-hidden="true"><use href="#i-volume" id="speak-icon"/></svg></button>
+            </header>
+            <div id="agent-log" class="chat" aria-live="polite"></div>
+            <div id="quick" class="quick"></div>
+            <form id="ask-form" class="composer" autocomplete="off">
+              <button type="button" id="btn-ptt" class="ptt" aria-label="Hold to talk" title="Hold to talk"><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg></button>
+              <input id="ask-text" placeholder="Ask about this call…" maxlength="500" aria-label="Your question">
+              <button type="submit" id="btn-ask" class="icon-btn send" aria-label="Send"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg></button>
+            </form>
+            <p class="agent-foot">Hold the mic button to talk. Answers use only this call's evidence.</p>
+          </article>
+        </aside>
+      </div>
     </div>
   </section>
+
+  <!-- ============ UNDER THE HOOD ============ -->
+  <section id="tab-pipeline" class="view" role="tabpanel" hidden>
+    <div class="page-head"><h1>Under the hood</h1><p class="lead">How ScamShield reached its verdict for the current call, one stage at a time.</p></div>
+    <div id="pipeline-empty" class="empty-state"><svg class="ic xl" aria-hidden="true"><use href="#i-wave"/></svg><h3>No call analysed yet</h3><p>Run an example or upload a recording on the Call tab, then come back to see every stage.</p></div>
+    <ol id="pipeline-body" class="steps" hidden>
+      <li class="step"><span class="step-n">1</span><div class="step-c card"><h3>Clean the signal</h3><p class="muted">Resample to 16 kHz, remove DC offset, normalise, pre-emphasise (<code>y[n] = x[n] − 0.97·x[n−1]</code>), then find speech with energy and zero-crossing rate.</p><div id="stages" class="stages"></div></div></li>
+      <li class="step"><span class="step-n">2</span><div class="step-c card"><h3>Fingerprint it</h3><p class="muted">Peaks of the spectrogram in the telephone band (300–3400 Hz) are paired into hashes. If a known recording shares many hashes at the <em>same</em> time offset, the histogram shows one tall spike.</p><canvas id="cv-offset" class="cv offset" aria-label="Offset histogram"></canvas><p id="offset-info" class="muted small"></p></div></li>
+      <li class="step"><span class="step-n">3</span><div class="step-c card"><h3>Understand the words</h3><p class="muted">Whisper transcribes the speech, sentence embeddings are compared with known scam scripts, and a lexicon flags urgency, secrecy, OTP requests and threats, with safe-context handling.</p><div class="two"><div><h4>Closest known scripts</h4><div id="sims" class="bars"></div></div><div><h4>Red-flag phrases</h4><div id="flag-chips" class="chips"></div></div></div></div></li>
+      <li class="step"><span class="step-n">4</span><div class="step-c card"><h3>Decide</h3><p class="muted">Noisy-OR fusion: <code>score = 100·(1 − Π(1 − wᵢ·sᵢ))</code>. Any one strong layer is enough; weak layers add up without ever exceeding 100.</p><div class="two"><div><h4>Layer contributions</h4><div id="components" class="bars"></div><p id="formula" class="muted small"></p></div><div><h4>Time per stage (ms)</h4><div id="timings" class="bars"></div></div></div></div></li>
+    </ol>
+  </section>
+
+  <!-- ============ EVALUATION ============ -->
+  <section id="tab-results" class="view" role="tabpanel" hidden>
+    <div class="page-head"><h1>Evaluation</h1><p class="lead">Every number here is read from <code>artifacts/results/summary.json</code>, produced by <code>run_eval</code>. Nothing is typed in by hand.</p></div>
+    <div id="results"><p class="muted">Loading…</p></div>
+  </section>
 </main>
 
-<main id="tab-pipeline" class="tab" hidden>
-  <section class="panel wide"><h2>Fingerprint: offset histogram <small>(spike = many hashes agree on one time offset = match)</small></h2>
-    <canvas id="cv-offset" width="900" height="200"></canvas><div id="offset-info" class="muted"></div></section>
-  <section class="panel"><h2>Stage timings (ms)</h2><div id="timings" class="muted">Analyse a clip first.</div></section>
-  <section class="panel"><h2>Fusion components</h2><div id="components"></div></section>
-  <section class="panel wide"><h2>Signal stages <small>(first 2 s)</small></h2><div id="stages"></div></section>
-  <section class="panel"><h2>Script similarity</h2><div id="sims"></div></section>
-</main>
+<div id="drop" class="drop" hidden><div><svg class="ic xl" aria-hidden="true"><use href="#i-upload"/></svg><b>Drop to analyse</b><span>wav, mp3, m4a or webm</span></div></div>
+<div id="tip" class="tip" role="tooltip" hidden></div>
 
-<main id="tab-results" class="tab" hidden>
-  <section class="panel full"><h2>Results</h2><div id="results" class="muted">Loading…</div></section>
-</main>
+<footer class="foot">
+  <span><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg>Audio is processed in memory and never stored.</span>
+  <span>Detects known and similar scams. Demo data is synthetic or staged. Not a substitute for calling your bank.</span>
+</footer>
 
-<footer>Detects known &amp; similar scams. Demo data is synthetic/staged. Not a substitute for calling your bank.</footer>
 <script src="app.js"></script>
 </body>
 </html>

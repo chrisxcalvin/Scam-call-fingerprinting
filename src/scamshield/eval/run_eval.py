@@ -45,7 +45,19 @@ SPLIT = {
 
 # ---------------------------------------------------------------- data
 def load_clips(split: str, quick: bool) -> list[dict]:
-    """Manifest rows of the split: its scripts, read by its voices or by the library voice."""
+    """Manifest rows of the split: its scripts, read by its voices or by the library voice.
+    `holdout` = data/holdout (paraphrased + new scripts, voices unseen anywhere else)."""
+    if split == "holdout":
+        base = DATA_DIR / "holdout"
+        out = []
+        for r in csv.DictReader(open(base / "manifest_holdout.csv", encoding="utf-8")):
+            if quick and r["augmentation"] not in QUICK_AUGS:
+                continue
+            r = dict(r)
+            r["path"] = str(base / ("clean" if r["augmentation"] == "none" else "augmented") / r["file"])
+            r["is_library_audio"] = False      # nothing here is the indexed audio: every fingerprint match is wrong
+            out.append(r)
+        return out
     sp = SPLIT[split]
     rows = list(csv.DictReader(open(DATA_DIR / "manifest.csv", encoding="utf-8")))
     rows += list(csv.DictReader(open(DATA_DIR / "manifest_augmented.csv", encoding="utf-8")))
@@ -184,7 +196,7 @@ def evaluate(recs: list[dict], cfg: dict, split: str, out: Path) -> dict:
     near = [r for r in neg if not harmful(r)]
     fmr = float(np.mean([r["fp_aligned"] >= thr for r in harm])) if harm else None
     near_rate = float(np.mean([r["fp_aligned"] >= thr for r in near])) if near else None
-    l1_auc = roc_auc(np.r_[np.ones(len(pos)), np.zeros(len(harm))], [r["fp_aligned"] for r in pos + harm])
+    l1_auc = roc_auc(np.r_[np.ones(len(pos)), np.zeros(len(harm))], [r["fp_aligned"] for r in pos + harm]) if pos else None
     fp_ms = [r["timings"]["fingerprint_match"] + r["timings"]["peaks_hashes"] + r["timings"]["stft"] for r in recs]
     # ---- Layer 2
     sims, flags = np.array([r["sim"] for r in recs]), np.array([r["redflags"] for r in recs])
@@ -238,7 +250,9 @@ def evaluate(recs: list[dict], cfg: dict, split: str, out: Path) -> dict:
     _plots(out, split, l1_rows, y, sims, flags, full_scores)
     return {
         "split": split, "n_clips": len(recs), "n_scam": int(y.sum()), "n_legit": int((~y).sum()),
-        "scripts": SPLIT[split]["scripts"], "voices": SPLIT[split]["voices"] + [f"{LIBRARY_VOICE} (library voice)"],
+        "scripts": SPLIT[split]["scripts"] if split in SPLIT else sorted({r["script_id"] for r in recs}),
+        "voices": (SPLIT[split]["voices"] + [f"{LIBRARY_VOICE} (library voice)"]) if split in SPLIT
+        else sorted({r["voice"] for r in recs}),
         "augmentations": sorted({r["aug"] for r in recs}),
         "layer1": {"threshold_aligned_hashes": thr, "by_augmentation": l1_rows, "n_positives": len(pos),
                    "n_negatives": len(harm), "false_match_rate": round(fmr, 4) if fmr is not None else None,
@@ -246,10 +260,15 @@ def evaluate(recs: list[dict], cfg: dict, split: str, out: Path) -> dict:
                    "n_same_script_near_copies": len(near),
                    "same_script_near_copy_match_rate": round(near_rate, 4) if near_rate is not None else None,
                    "near_copy_definition": "same scam script, library voice at the other speaking rate (+augmentations)",
-                   "auc_aligned_hashes": round(l1_auc, 3), "query_ms_p50": pct(fp_ms, 50), "query_ms_p95": pct(fp_ms, 95),
+                   "auc_aligned_hashes": round(l1_auc, 3) if l1_auc is not None else None, "query_ms_p50": pct(fp_ms, 50), "query_ms_p95": pct(fp_ms, 95),
                    "index_hashes": None},
-        "layer2": {"note": "Scripts here are the library scripts read by other voices: a SANITY result, not the honest "
-                           "holdout/human test (docs/06).",
+        "layer2": {"note": ("HOLDOUT: scam scripts are newly written paraphrases (different wording and details) of the six "
+                            "scam types, legit scripts are new and include genuine calls that mention OTP/KYC/police/accident, "
+                            "read by voices unseen anywhere else. Thresholds are the dev-calibrated ones, unchanged. "
+                            "Author note: the scripts were written by the same assistant that wrote the red-flag lexicon, so "
+                            "red-flag numbers may be optimistic." if split == "holdout" else
+                            "Scripts here are the library scripts read by other voices: a SANITY result, not the honest "
+                            "holdout/human test (docs/06)."),
                    "auc_script_sim": round(roc_auc(y, sims), 3), "auc_redflags": round(roc_auc(y, flags), 3),
                    "by_language": by_lang, "scam_type_top1_accuracy": round(float(np.mean(type_ok)), 3),
                    "wer_en_by_aug": {k: round(float(np.mean(v)), 3) for k, v in sorted(wers.items())}},
@@ -367,13 +386,15 @@ def _git_commit() -> str | None:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--split", choices=["dev", "test"], default="dev")
+    ap.add_argument("--split", choices=["dev", "test", "holdout"], default="dev")
     ap.add_argument("--quick", action="store_true", help="only clean/tel/gsm/snr10 versions")
     ap.add_argument("--no-live", action="store_true", help="skip the simulated-live latency evaluation")
     args = ap.parse_args()
     logging.basicConfig(level=logging.WARNING)
     t0 = time.time()
     scripts = {s["id"]: s for s in json.load(open(DATA_DIR / "scripts.json", encoding="utf-8"))}
+    if args.split == "holdout":
+        scripts = {s["id"]: s for s in json.load(open(DATA_DIR / "holdout" / "scripts_holdout.json", encoding="utf-8"))}
     models = Models().load()
     clips = load_clips(args.split, args.quick)
     print(f"{args.split}: {len(clips)} clips")
@@ -385,7 +406,7 @@ def main() -> None:
     else:
         cfg = load_config()
         if "fp_threshold" not in cfg:
-            raise SystemExit("Run the dev split first: the test split must use dev-calibrated settings.")
+            raise SystemExit("Run the dev split first: test/holdout must use dev-calibrated settings.")
     res = evaluate(recs, cfg, args.split, RESULTS_DIR)
     res["layer1"]["index_hashes"] = len(models.index) if models.index else None
     if not args.no_live:
